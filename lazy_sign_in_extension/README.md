@@ -1,0 +1,40 @@
+Google sign-in library for Chrome extension and Firefox extension using [lazy_sign_in](https://pub.dev/packages/lazy_sign_in) interface.
+
+### Install
+
+```sh
+flutter pub add lazy_sign_in_extension
+```
+
+### Usage
+
+```dart
+import 'package:lazy_sign_in_extension/lazy_sign_in_extension.dart' as lazy;
+const String clientId = 'Google CHROME/WEB APP Client Id';
+final lazy.SignInBase globalLazySignIn = lazy.SignInExt(clientId: clientId);
+```
+
+#### One Interface/Api
+
+```dart
+Widget buttonSignIn = TextButton(
+  onPressed: () => globalLazySignIn.signInHandler(),
+  child: const Text('Sign-In'),
+);
+
+Widget buttonSignOut = TextButton(
+  onPressed: () => globalLazySignIn.signOutHandler(),
+  child: const Text('Sign-Out'),
+);
+```
+
+#### Web/App
+
+Use [lazy_sign_in_google](https://pub.dev/packages/lazy_sign_in_google)
+
+### Example
+
+- Example folder
+- Complete repo: https://github.com/J-Siu/flutter_lazy/example/lazy_sign_in_example/
+
+You will have to supply your own `clientId` accordingly.
