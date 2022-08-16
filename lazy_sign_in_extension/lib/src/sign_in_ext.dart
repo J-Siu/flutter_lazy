@@ -12,6 +12,7 @@ const String _schemeChrome = 'chrome-extension';
 class SignInExt extends lazy.SignIn {
   late final lazy.SignIn _api;
 
+  /// Auto detect Chrome or Firefox extension environment, else fallback to use [lazy.SignInDummy].
   /// - [clientId]
   ///   - Moz extension
   ///     - should use Google OAuth Web Application Client Id
@@ -39,11 +40,14 @@ class SignInExt extends lazy.SignIn {
     assert(scheme == _schemeChrome || scheme == _schemeMoz, 'Must run as moz extension.');
 
     if (scheme == _schemeChrome) {
+      lazy.log('$debugPrefix:redirectUrl:Chrome extension', forced: debugLog);
       _api = lazy.SignInExtChrome(clientId: clientId, scopes: scopes);
-    }
-
-    if (scheme == _schemeMoz) {
+    } else if (scheme == _schemeMoz) {
+      lazy.log('$debugPrefix:redirectUrl:Firefox extension', forced: debugLog);
       _api = lazy.SignInExtMoz(clientId: clientId, scopes: scopes);
+    } else {
+      lazy.log('$debugPrefix:redirectUrl:SignInDummy', forced: true);
+      _api = lazy.SignInDummy(clientId: clientId, scopes: scopes);
     }
 
     // lazy.log('$debugPrefix:authUri.query:${_api.authUri.queryParametersAll.toString()}', forced: debugLog);
