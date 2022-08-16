@@ -32,8 +32,10 @@ class SignInExtChrome extends SignIn {
     // #region GSignInExtChrome
     String debugPrefix = '$runtimeType.GSignInExtChrome()';
     assert(clientId.isNotEmpty, '$debugPrefix:clientId cannot be empty');
-    assert(Uri.base.scheme == 'chrome-extension', '$debugPrefix:Can only run as Chrome extension.');
-    lazy.log('$debugPrefix:uri.base.scheme:${Uri.base.scheme}', forced: debugLog);
+    assert(Uri.base.scheme == 'chrome-extension',
+        '$debugPrefix:Can only run as Chrome extension.');
+    lazy.log('$debugPrefix:uri.base.scheme:${Uri.base.scheme}',
+        forced: debugLog);
     // #endregion
   }
 
@@ -108,7 +110,8 @@ class SignInExtChrome extends SignIn {
     String debugPrefix = '$runtimeType.getPhotoUrl()';
     lazy.log(runtimeType);
     if (__token.isNotEmpty) {
-      var url = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=$__token';
+      var url =
+          'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=$__token';
       try {
         var res = await http.get(Uri.parse(url));
         var userInfo = jsonDecode(res.body);

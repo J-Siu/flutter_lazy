@@ -35,8 +35,11 @@ class SignInExtMoz extends SignIn {
     String debugPrefix = '$runtimeType.GSignInExtMoz()';
     assert(clientId.isNotEmpty, '$debugPrefix:clientId cannot be empty');
     assert(Uri.base.scheme == 'moz-extension', 'Must run as moz extension.');
-    lazy.log('$debugPrefix:authUri.query:${_api.authUri.queryParametersAll.toString()}', forced: debugLog);
-    lazy.log('$debugPrefix:authUri:${_api.authUri.toString()}', forced: debugLog);
+    lazy.log(
+        '$debugPrefix:authUri.query:${_api.authUri.queryParametersAll.toString()}',
+        forced: debugLog);
+    lazy.log('$debugPrefix:authUri:${_api.authUri.toString()}',
+        forced: debugLog);
     lazy.log('$debugPrefix:redirectUrl:${_api.redirectUrl}', forced: debugLog);
   }
 
@@ -67,9 +70,11 @@ class SignInExtMoz extends SignIn {
     var debugPrefix = '$runtimeType.signInHandler()';
     lazy.log(debugPrefix, forced: debugLog);
 
-    Duration secondSinceSignIn = DateTime.now().toUtc().difference(_apiFirefoxSignInTime);
+    Duration secondSinceSignIn =
+        DateTime.now().toUtc().difference(_apiFirefoxSignInTime);
 
-    if (__token.isEmpty || secondSinceSignIn.inSeconds > (_apiFireFoxSignInDuration - 100)) {
+    if (__token.isEmpty ||
+        secondSinceSignIn.inSeconds > (_apiFireFoxSignInDuration - 100)) {
       try {
         String tmpToken = '';
         // https://{redirectUri}/
@@ -77,22 +82,28 @@ class SignInExtMoz extends SignIn {
         //   &token_type=Bearer
         //   &expires_in={3599}
         //   &scope={scopes}
-        lazy.log('$debugPrefix:_api.launchWebAuthFlow(interactive: false)', forced: debugLog);
+        lazy.log('$debugPrefix:_api.launchWebAuthFlow(interactive: false)',
+            forced: debugLog);
         dynamic res;
         try {
           res = await _api.launchWebAuthFlow(interactive: false);
           tmpToken = _extractToken(res);
         } catch (e) {
-          lazy.log('$debugPrefix:_api.launchWebAuthFlow(interactive: false):catch:$e:Will continue with interaction', forced: debugLog);
+          lazy.log(
+              '$debugPrefix:_api.launchWebAuthFlow(interactive: false):catch:$e:Will continue with interaction',
+              forced: debugLog);
           tmpToken = '';
         }
         if (tmpToken.isEmpty) {
-          lazy.log('$debugPrefix:_api.launchWebAuthFlow(interactive: true)', forced: debugLog);
+          lazy.log('$debugPrefix:_api.launchWebAuthFlow(interactive: true)',
+              forced: debugLog);
           res = await _api.launchWebAuthFlow(interactive: true);
         }
-        lazy.log('$debugPrefix:_api.launchWebAuthFlow():res:$res', forced: debugLog);
+        lazy.log('$debugPrefix:_api.launchWebAuthFlow():res:$res',
+            forced: debugLog);
         _apiFireFoxSignInDuration = _extractExpireIn(res);
-        if (_apiFireFoxSignInDuration == 0) throw ('Something wrong, cannot get [expire_in].');
+        if (_apiFireFoxSignInDuration == 0)
+          throw ('Something wrong, cannot get [expire_in].');
         _apiFirefoxSignInTime = DateTime.now().toUtc();
         _token = tmpToken;
         _photoUrl = await _getPhotoUrl();
@@ -134,7 +145,8 @@ class SignInExtMoz extends SignIn {
     String debugPrefix = '$runtimeType.getPhotoUrl()';
     lazy.log(runtimeType);
     if (_token.isNotEmpty) {
-      var url = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=$_token';
+      var url =
+          'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=$_token';
       try {
         var res = await http.get(Uri.parse(url));
         var userInfo = jsonDecode(res.body);
@@ -154,7 +166,8 @@ class SignInExtMoz extends SignIn {
     var debugPrefix = '$runtimeType._extractTokenExpireApiFirefox()';
     var resUri = Uri.parse(res.replaceAll('#', '?'));
     Map<String, String> resParams = resUri.queryParameters;
-    resParams.forEach((k, v) => lazy.log('$debugPrefix:$k:$v', forced: debugLog));
+    resParams
+        .forEach((k, v) => lazy.log('$debugPrefix:$k:$v', forced: debugLog));
     String expire = resParams['expires_in'] ?? '';
     lazy.log('$debugPrefix:expire:$expire', forced: debugLog);
     return int.tryParse(expire) ?? 0;

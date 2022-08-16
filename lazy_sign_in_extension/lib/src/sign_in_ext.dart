@@ -37,7 +37,6 @@ class SignInExt extends lazy.SignIn {
     String debugPrefix = '$runtimeType.GSignInExtMoz()';
     String scheme = Uri.base.scheme;
     assert(clientId.isNotEmpty, '$debugPrefix:clientId cannot be empty');
-    assert(scheme == _schemeChrome || scheme == _schemeMoz, 'Must run as moz extension.');
 
     if (scheme == _schemeChrome) {
       lazy.log('$debugPrefix:redirectUrl:Chrome extension', forced: debugLog);
@@ -46,7 +45,10 @@ class SignInExt extends lazy.SignIn {
       lazy.log('$debugPrefix:redirectUrl:Firefox extension', forced: debugLog);
       _api = lazy.SignInExtMoz(clientId: clientId, scopes: scopes);
     } else {
-      lazy.log('$debugPrefix:redirectUrl:SignInDummy', forced: true);
+      lazy.log(
+        '$debugPrefix:redirectUrl:SignInDummy. Not running as extension',
+        forced: true,
+      );
       _api = lazy.SignInDummy(clientId: clientId, scopes: scopes);
     }
 
