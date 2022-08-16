@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer' as dev;
 
 /// turn [log] on and off
 bool logEnable = false;
 
-/// #### log - a wrapper of flutter's debugPrint()
+/// #### log - a wrapper of dart:developer [log]
 ///
 /// Enable/disable by Log.enable.
 ///
@@ -12,7 +12,17 @@ bool logEnable = false;
 void log(
   Object? object, {
   bool forced = false,
+  DateTime? time,
+  String name = '',
+  int level = 0,
   int? wrapWidth,
 }) {
-  if (logEnable || forced) debugPrint(object?.toString(), wrapWidth: wrapWidth);
+  if (logEnable || forced) {
+    dev.log(
+      object?.toString() ?? 'null',
+      level: level,
+      name: name,
+      time: time,
+    );
+  }
 }
