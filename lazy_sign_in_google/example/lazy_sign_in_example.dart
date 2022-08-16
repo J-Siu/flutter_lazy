@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-// // Uncomment following for Chrome extension
-// import 'package:lazy_sign_in/lazy_sign_in_ext_chrome.dart';
-// final LazySignInBase globalLazySignIn = LazySignInExtChrome(clientId: clientId);
+// This is dummy only
+import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
 
-// // Uncomment following for Firefox extension
-// import 'package:lazy_sign_in/lazy_sign_in_ext_moz.dart';
-// final LazySignInBase globalLazySignIn = LazySignInExtMoz(clientId: clientId);
+final lazy.SignIn globalLazySignIn = lazy.SignInDummy(clientId: clientId);
 
-// Uncomment following for Web/App
-import 'package:lazy_sign_in_google/lazy_sign_in_google.dart' as lazy;
+// // Uncomment following for Chrome/Firefox extension
+// import 'package:lazy_sign_in_extension/lazy_sign_in_extension.dart' as lazy;
+// final lazy.SignIn globalLazySignIn = lazy.SignInExt(clientId: clientId);
 
-final lazy.SignIn globalLazySignIn = lazy.SignInGoogle(clientId: clientId);
+// // Uncomment following for Web/App
+// import 'package:lazy_sign_in_google/lazy_sign_in_google.dart' as lazy;
+// final lazy.SignIn globalLazySignIn = lazy.SignInGoogle(clientId: clientId);
 
 /// - Chrome Extension
 ///   - use Google OAuth **Chrome Application** client id.
