@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'js/api_chrome.dart';
 import 'package:http/http.dart' as http;
 import 'package:lazy_log/lazy_log.dart' as lazy;
-import 'package:lazy_sign_in/lazy_sign_in.dart';
+import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
 
 /// ### Lazy [SignInExtChrome]
 /// - Build in listener for account status change, and a [SignInMsg] notifier [msg]
-class SignInExtChrome extends SignIn {
+class SignInExtChrome extends lazy.SignIn {
   // --- Internal
   String __token = '';
   String _photoUrl = '';
@@ -101,7 +101,7 @@ class SignInExtChrome extends SignIn {
     if (__token != v) {
       __token = v;
       if (v.isEmpty) _photoUrl = '';
-      msg.value = SignInMsg(token: v);
+      msg.value = lazy.SignInMsg(token: v);
     }
   }
 

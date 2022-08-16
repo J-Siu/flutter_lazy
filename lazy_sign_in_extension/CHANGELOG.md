@@ -1,3 +1,5 @@
+## 1.0.4
+- Remove unnecessary [GoogleSignIn] dependency
 ## 1.0.3
 - [SignInExt] use [SignInDummy] if extension checking failed, instead of assert.
 

@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'js/api_moz.dart';
 import 'package:http/http.dart' as http;
 import 'package:lazy_log/lazy_log.dart' as lazy;
-import 'package:lazy_sign_in/lazy_sign_in.dart';
+import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
 
 /// ### Lazy [SignInExtMoz]
 /// - Build in listener for account status change, and a [SignInMsg] notifier [msg]
-class SignInExtMoz extends SignIn {
+class SignInExtMoz extends lazy.SignIn {
   // --- Internal
   String __token = '';
   String _photoUrl = '';
@@ -102,8 +102,9 @@ class SignInExtMoz extends SignIn {
         lazy.log('$debugPrefix:_api.launchWebAuthFlow():res:$res',
             forced: debugLog);
         _apiFireFoxSignInDuration = _extractExpireIn(res);
-        if (_apiFireFoxSignInDuration == 0)
+        if (_apiFireFoxSignInDuration == 0) {
           throw ('Something wrong, cannot get [expire_in].');
+        }
         _apiFirefoxSignInTime = DateTime.now().toUtc();
         _token = tmpToken;
         _photoUrl = await _getPhotoUrl();
@@ -137,7 +138,7 @@ class SignInExtMoz extends SignIn {
     if (__token != v) {
       __token = v;
       if (v.isEmpty) _photoUrl = '';
-      msg.value = SignInMsg(token: v);
+      msg.value = lazy.SignInMsg(token: v);
     }
   }
 
