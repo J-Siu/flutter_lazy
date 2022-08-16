@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+// This is dummy only
+import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
+
+final lazy.SignIn globalLazySignIn = lazy.SignInDummy(clientId: clientId);
+
 // // Uncomment following for Chrome/Firefox extension
 // import 'package:lazy_sign_in_extension/lazy_sign_in_extension.dart' as lazy;
 // final lazy.SignIn globalLazySignIn = lazy.SignInExt(clientId: clientId);
