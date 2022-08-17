@@ -1,3 +1,5 @@
+## 0.4.1
+- update dependency
 ## 0.4.0
 - Split [log] to `lazy_log`
 ## 0.3.1

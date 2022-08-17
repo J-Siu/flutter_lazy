@@ -48,12 +48,18 @@ ThemeProvider themeProvider({
 }
 
 void _themeProviderAuto(ThemeController controller) {
-  Brightness platformBrightness = SchedulerBinding.instance.window.platformBrightness;
-  platformBrightness == Brightness.dark ? controller.setTheme('dark') : controller.setTheme('light');
+  Brightness platformBrightness =
+      SchedulerBinding.instance.window.platformBrightness;
+  platformBrightness == Brightness.dark
+      ? controller.setTheme('dark')
+      : controller.setTheme('light');
   controller.forgetSavedTheme();
 }
 
-void _themeProviderOnInitialCallBack(controller, previouslySavedThemeFuture) async {
+void _themeProviderOnInitialCallBack(
+    controller, previouslySavedThemeFuture) async {
   String? savedTheme = await previouslySavedThemeFuture;
-  savedTheme != null ? controller.setTheme(savedTheme) : _themeProviderAuto(controller);
+  savedTheme != null
+      ? controller.setTheme(savedTheme)
+      : _themeProviderAuto(controller);
 }

@@ -48,8 +48,10 @@ class About {
       content.lazyAdd(lazy.textField(context, text: copyright));
       content.lazyAdd(lazy.urlButton(context, text: license, url: licenseUrl));
       content.lazyAdd(lazy.urlButton(context, text: repo, url: repoUrl));
-      content.lazyAdd(lazy.urlButton(context, text: 'Privacy Policy', url: privacyPolicyUrl));
-      content.lazyAdd(lazy.urlButton(context, text: homepage, url: homepageUrl));
+      content.lazyAdd(lazy.urlButton(context,
+          text: 'Privacy Policy', url: privacyPolicyUrl));
+      content
+          .lazyAdd(lazy.urlButton(context, text: homepage, url: homepageUrl));
       content.lazyAdd(lazy.urlButton(context, text: blog, url: blogUrl));
     }
   }

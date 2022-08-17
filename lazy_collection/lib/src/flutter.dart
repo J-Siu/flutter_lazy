@@ -6,7 +6,8 @@ const double defaultPadding = 4;
 const double defaultRadius = 10;
 const double defaultBorderWidth = 1;
 
-BorderRadius borderRadius(double radius) => BorderRadius.all(Radius.circular(radius));
+BorderRadius borderRadius(double radius) =>
+    BorderRadius.all(Radius.circular(radius));
 
 BoxDecoration boxDecoration({
   double radius = defaultRadius,
@@ -31,7 +32,8 @@ Table table({
     );
 
 TableCell tableCell({
-  TableCellVerticalAlignment verticalAlignment = TableCellVerticalAlignment.middle,
+  TableCellVerticalAlignment verticalAlignment =
+      TableCellVerticalAlignment.middle,
   required Widget child,
 }) =>
     TableCell(
@@ -40,12 +42,18 @@ TableCell tableCell({
     );
 
 // Text Style
-TextStyle? textStyleBodyL(BuildContext context) => Theme.of(context).textTheme.bodyLarge;
-TextStyle? textStyleBodyM(BuildContext context) => Theme.of(context).textTheme.bodyMedium;
-TextStyle? textStyleBodyS(BuildContext context) => Theme.of(context).textTheme.bodySmall;
-TextStyle? textStyleHeadlineL(BuildContext context) => Theme.of(context).textTheme.headlineLarge;
-TextStyle? textStyleHeadlineM(BuildContext context) => Theme.of(context).textTheme.headlineMedium;
-TextStyle? textStyleHeadlineS(BuildContext context) => Theme.of(context).textTheme.headlineSmall;
+TextStyle? textStyleBodyL(BuildContext context) =>
+    Theme.of(context).textTheme.bodyLarge;
+TextStyle? textStyleBodyM(BuildContext context) =>
+    Theme.of(context).textTheme.bodyMedium;
+TextStyle? textStyleBodyS(BuildContext context) =>
+    Theme.of(context).textTheme.bodySmall;
+TextStyle? textStyleHeadlineL(BuildContext context) =>
+    Theme.of(context).textTheme.headlineLarge;
+TextStyle? textStyleHeadlineM(BuildContext context) =>
+    Theme.of(context).textTheme.headlineMedium;
+TextStyle? textStyleHeadlineS(BuildContext context) =>
+    Theme.of(context).textTheme.headlineSmall;
 
 // Text widget with padding
 Padding textPadding(
@@ -64,7 +72,8 @@ Padding textPadding(
   );
 }
 
-EdgeInsets padAll([double? padding]) => EdgeInsets.all(padding ?? defaultPadding);
+EdgeInsets padAll([double? padding]) =>
+    EdgeInsets.all(padding ?? defaultPadding);
 
 ButtonStyle buttonStyleRound({
   double padding = defaultPadding,
@@ -72,7 +81,8 @@ ButtonStyle buttonStyleRound({
 }) =>
     ButtonStyle(
       padding: MaterialStateProperty.all<EdgeInsets>(padAll(padding)),
-      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: borderRadius(radius))),
+      shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(borderRadius: borderRadius(radius))),
     );
 
 Widget outlinedTextButton({

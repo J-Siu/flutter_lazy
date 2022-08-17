@@ -26,17 +26,22 @@ import 'package:url_launcher/url_launcher.dart';
 const String defaultJsonIndent = '  ';
 
 /// Json encode [object] with supplied [indent] or [defaultJsonIndent]
-String jsonPretty(Object? object, {String indent = defaultJsonIndent}) => JsonEncoder.withIndent(indent).convert(object);
+String jsonPretty(Object? object, {String indent = defaultJsonIndent}) =>
+    JsonEncoder.withIndent(indent).convert(object);
 
-Future<String> byteStreamToString(Stream<List<int>> stream) => (stream as ByteStream).bytesToString();
-Future<String> mediaStreamToString(Stream<List<int>> stream) => byteStreamToString(stream);
+Future<String> byteStreamToString(Stream<List<int>> stream) =>
+    (stream as ByteStream).bytesToString();
+Future<String> mediaStreamToString(Stream<List<int>> stream) =>
+    byteStreamToString(stream);
 
 // --- DateTime
 const defaultDateTimeFormat = 'yyyy-MM-dd HH:mm:ss';
 const defaultTimestampFormat = 'yyyy-MM-dd hhmmss';
 
 /// Return `DateTime` from [string] using supplied [format] or [defaultDateTimeFormat] = 'yyyy-MM-dd HH:mm:ss'`
-DateTime dateTimeFromString(String string, {String format = defaultDateTimeFormat}) => DateFormat(format).parse(string);
+DateTime dateTimeFromString(String string,
+        {String format = defaultDateTimeFormat}) =>
+    DateFormat(format).parse(string);
 
 /// Shorthand for `DateTime.now()`
 DateTime get now => DateTime.now();

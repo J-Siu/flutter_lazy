@@ -157,7 +157,8 @@ class LabeledSwitch {
 
   Row get row => Row(children: [label, button]);
 
-  TableRow get tableRow => TableRow(children: [lazy.tableCell(child: label), lazy.tableCell(child: button)]);
+  TableRow get tableRow => TableRow(
+      children: [lazy.tableCell(child: label), lazy.tableCell(child: button)]);
 
   static Widget table({List<LabeledSwitch> switches = const []}) {
     List<TableRow> tableRows = [];

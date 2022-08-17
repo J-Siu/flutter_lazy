@@ -31,7 +31,8 @@ class SpinningWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _SpinningWidget();
 }
 
-class _SpinningWidget extends State<SpinningWidget> with TickerProviderStateMixin {
+class _SpinningWidget extends State<SpinningWidget>
+    with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 30),
     vsync: this,

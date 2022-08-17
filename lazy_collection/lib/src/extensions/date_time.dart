@@ -7,8 +7,10 @@ extension LazyExtDataTime on DateTime {
   String toTimestamp() => DateFormat(lazy.defaultTimestampFormat).format(this);
 
   /// Return [String] in supplied [format] or [lazy.defaultTimestampFormat] = `yyyy-MM-dd HH:mm:ss`
-  String toFormat({String format = lazy.defaultDateTimeFormat}) => DateFormat(format).format(this);
+  String toFormat({String format = lazy.defaultDateTimeFormat}) =>
+      DateFormat(format).format(this);
 
   /// Alias to [toFormat]
-  String toStringFormat({String format = lazy.defaultDateTimeFormat}) => toFormat(format: format);
+  String toStringFormat({String format = lazy.defaultDateTimeFormat}) =>
+      toFormat(format: format);
 }
