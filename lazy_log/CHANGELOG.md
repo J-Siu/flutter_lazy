@@ -1,3 +1,5 @@
+## 1.0.3
+- Add stdout support
 ## 1.0.2
 - Switch to dart:developer log.
 ## 1.0.1
