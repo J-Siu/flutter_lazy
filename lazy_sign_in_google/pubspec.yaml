@@ -1,7 +1,7 @@
 name: lazy_sign_in_google
 description: '[google_sign_in] wrapper using [lazy_sign_in] interface. Support web and app Google sign in.'
 
-version: 1.0.3
+version: 1.0.5
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
   google_sign_in: ^5.4.1
   http: ^0.13.5
   js: ^0.6.4
-  lazy_log: ^1.0.2
+  lazy_log: ^1.0.3
   lazy_sign_in: ^1.0.2
 
 dev_dependencies:
