@@ -79,9 +79,11 @@ class JsonPreference {
       // Deep copy to ensure [obj] won't be modified externally afterwards
       obj = jsonDecode(jsonEncode(jsonObj));
       if (debugLogJsonContent) {
-        lazy.log('$runtimeType.fromJson():${jsonObj.toString()}', forced: debugLogJson || debug);
+        lazy.log('$runtimeType.fromJson():${jsonObj.toString()}',
+            forced: debugLogJson || debug);
       } else {
-        lazy.log('$runtimeType.fromJson():${jsonObj.toString().length}', forced: debugLogJson || debug);
+        lazy.log('$runtimeType.fromJson():${jsonObj.toString().length}',
+            forced: debugLogJson || debug);
       }
       save(debugMsg: '$runtimeType.fromJson()');
     } catch (e) {
@@ -113,7 +115,8 @@ class JsonPreference {
       lazy.log('$debugPrefix:json decoded', forced: debugLogSave);
       noSave(() => fromJson(json));
     } else {
-      lazy.log('$debugPrefix:not loaded, already up to date', forced: debugLogSave);
+      lazy.log('$debugPrefix:not loaded, already up to date',
+          forced: debugLogSave);
     }
   }
 
@@ -208,7 +211,8 @@ class JsonPreference {
     String json = lazy.jsonPretty(this);
     await pref.setString(key, json);
     if (saved != null) saved();
-    lazy.log('$debugPrefix:${json.length}(byte):noSaveTime:$noSaveTime', forced: debugLogSave);
+    lazy.log('$debugPrefix:${json.length}(byte):noSaveTime:$noSaveTime',
+        forced: debugLogSave);
   }
 
   /// Load and set _lastSaveTime from local store

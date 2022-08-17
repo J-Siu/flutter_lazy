@@ -1,3 +1,5 @@
+## 0.2.5
+- update dependency
 ## 0.2.4
 - Move into [flutter_lazy](https://github.com/j-siu/flutter_lazy)
 ## 0.2.3
