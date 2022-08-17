@@ -1,3 +1,5 @@
+## 1.0.5
+- update dependency
 ## 1.0.4
 - Remove unnecessary [GoogleSignIn] dependency
 ## 1.0.3
