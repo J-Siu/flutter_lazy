@@ -1,3 +1,5 @@
+## 0.4.3
+- Move [jsonPretty] to lazy_log
 ## 0.4.2
 - update dependency
 ## 0.4.1
