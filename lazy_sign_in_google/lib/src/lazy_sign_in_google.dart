@@ -1,14 +1,14 @@
-import 'package:lazy_sign_in/lazy_sign_in.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
+import 'package:google_sign_in/google_sign_in.dart' as lazy;
 import 'package:lazy_log/lazy_log.dart' as lazy;
 
 /// ### Lazy [SignInGoogle]
 /// - Build in listener for account status change, and a [SignInMsg] notifier [msg]
 /// - [GoogleSignIn] wrapper class with a [signInHandler]
-class SignInGoogle extends SignIn {
+class SignInGoogle extends lazy.SignIn {
   // --- Internal
   String __token = '';
-  final GoogleSignIn _api;
+  final lazy.GoogleSignIn _api;
 
   /// - [clientId]
   ///   - use Google OAuth Chrome Application Client Id standalone app
@@ -21,7 +21,7 @@ class SignInGoogle extends SignIn {
     debugLog = false,
     required clientId,
     scopes = const ['email'],
-  })  : _api = GoogleSignIn(clientId: clientId, scopes: scopes),
+  })  : _api = lazy.GoogleSignIn(clientId: clientId, scopes: scopes),
         super(
           clientId: clientId,
           debugLog: debugLog,
@@ -68,14 +68,17 @@ class SignInGoogle extends SignIn {
       String tmpToken = '';
       lazy.log('$debugPrefix:_googleSignIn.signInSilently()', forced: debugLog);
       await _api
-          .signInSilently(reAuthenticate: reAuthenticate, suppressErrors: suppressErrors)
+          .signInSilently(
+              reAuthenticate: reAuthenticate, suppressErrors: suppressErrors)
           .onError((e, _) => throw ('_googleSignIn.signInSilently():$e'));
       tmpToken = await _extractToken();
 
       // Sign-in silently failed -> try pop-up
       if (tmpToken.isEmpty && !silentOnly) {
         lazy.log('$debugPrefix:_googleSignIn.signIn()', forced: debugLog);
-        await _api.signIn().onError((e, _) => throw ('_googleSignIn.signIn():$e'));
+        await _api
+            .signIn()
+            .onError((e, _) => throw ('_googleSignIn.signIn():$e'));
         tmpToken = await _extractToken();
       }
 
@@ -101,7 +104,9 @@ class SignInGoogle extends SignIn {
     // #region signOutHandler
     var debugPrefix = '$runtimeType.signInHandler()';
     try {
-      await _api.signOut().onError((e, _) => throw ('_googleSignIn.g=signOut():error:$e'));
+      await _api
+          .signOut()
+          .onError((e, _) => throw ('_googleSignIn.g=signOut():error:$e'));
     } catch (error) {
       throw '$debugPrefix:catch:$error';
     }
@@ -113,7 +118,7 @@ class SignInGoogle extends SignIn {
   set _token(String v) {
     if (__token != v) {
       __token = v;
-      msg.value = SignInMsg(token: v);
+      msg.value = lazy.SignInMsg(token: v);
     }
   }
 
