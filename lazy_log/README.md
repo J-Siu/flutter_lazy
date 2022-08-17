@@ -6,6 +6,7 @@ Simple [log] with global [enableLog] to turn on and off and [forced] to override
 Name|Api Stable|Description
 ---|---|---
 [log]|yes|Simple log
+[jsonPretty]|yes|Commonly use to print object
 
 ## Getting started
 
@@ -14,8 +15,6 @@ flutter pub add lazy_log
 ```
 
 ## Usage
-
-[Working progress, examples will be added]
 
 Import with `as lazy` as follow:
 

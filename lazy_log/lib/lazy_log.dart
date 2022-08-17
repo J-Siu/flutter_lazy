@@ -1,3 +1,5 @@
 library lazy;
 
-export 'src/lazy_log.dart' show log, logEnable;
+export 'src/log.dart' show log, logEnable, logStdout;
+
+export 'src/json_pretty.dart' show jsonPretty, defaultJsonIndent;
