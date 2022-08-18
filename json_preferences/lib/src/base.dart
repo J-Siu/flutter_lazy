@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:lazy_collection/lazy_collection.dart' as lazy;
 import 'package:lazy_log/lazy_log.dart' as lazy;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -154,7 +153,7 @@ class JsonPreference {
   var _saveWaiting = false;
 
   get _keySaveTime => '$key.SaveTime';
-  var _lastSaveTime = lazy.zeroDay;
+  var _lastSaveTime = DateTime(0);
 
   Future _saveWait({
     String debugMsg = '',

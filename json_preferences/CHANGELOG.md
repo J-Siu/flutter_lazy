@@ -1,3 +1,5 @@
+## 1.0.0
+- Remove dependency lazy_collection
 ## 0.2.6
 - update dependency
 ## 0.2.5
