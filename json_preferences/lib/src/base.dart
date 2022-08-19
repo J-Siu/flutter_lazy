@@ -94,6 +94,12 @@ class JsonPreference {
   /// - Do not override
   Map<String, dynamic> toJson() => jsonDecode(jsonEncode(obj));
 
+  /// Return cached [SharedPreferences] instance
+  FutureOr<SharedPreferences> getPref() async {
+    _pref ??= await SharedPreferences.getInstance();
+    return _pref!;
+  }
+
   /// Return pretty print json
   @override
   String toString() => lazy.jsonPretty(obj);
@@ -107,7 +113,7 @@ class JsonPreference {
     bool different = await _loadTime();
     if (different || forced) {
       // Get Preference
-      var pref = await _pref;
+      var pref = await getPref();
       String jsonString = pref.getString(key) ?? '{}';
       lazy.log('$debugPrefix:${jsonString.length}(byte)', forced: debugLogSave);
       Map<String, dynamic> json = jsonDecode(jsonString);
@@ -147,7 +153,8 @@ class JsonPreference {
   }
 
   // --- internal
-  final _pref = SharedPreferences.getInstance();
+  SharedPreferences? _pref;
+
   var _noSave = 0;
   var _saveWaitAgain = false;
   var _saveWaiting = false;
@@ -204,7 +211,7 @@ class JsonPreference {
     bool noSaveTime = false,
   }) async {
     String debugPrefix = '$debugMsg -> $runtimeType._saveGo()';
-    var pref = await _pref;
+    var pref = await getPref();
     // When saving/adding default for 1st run we don't want to update time
     if (!noSaveTime) await _saveTime(dateTime: dateTime);
     String json = lazy.jsonPretty(this);
@@ -219,7 +226,7 @@ class JsonPreference {
   Future<bool> _loadTime() async {
     int ms = 0;
     int msCurrent = _lastSaveTime.millisecondsSinceEpoch;
-    var pref = await _pref;
+    var pref = await getPref();
     ms = pref.getInt(_keySaveTime) ?? 0;
     // Only update if different
     if (ms != msCurrent) {
@@ -238,7 +245,7 @@ class JsonPreference {
       // Use current time
       _lastSaveTime = DateTime.now().toUtc();
     }
-    var pref = await _pref;
+    var pref = await getPref();
     pref.setInt(_keySaveTime, _lastSaveTime.millisecondsSinceEpoch);
     lazy.log('$runtimeType.saveTime():$lastSaveTime', forced: debugLogSave);
   }

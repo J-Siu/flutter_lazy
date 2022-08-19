@@ -1,3 +1,5 @@
+## 1.0.1
+- Cache [SharedPreferences] instance to improve performance
 ## 1.0.0
 - Remove dependency lazy_collection
 ## 0.2.6
