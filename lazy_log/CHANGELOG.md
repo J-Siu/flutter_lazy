@@ -1,3 +1,5 @@
+## 1.0.5
+- Fix double print issue. Only use [print].
 ## 1.0.4
 - Add [jsonPretty]
 ## 1.0.3
