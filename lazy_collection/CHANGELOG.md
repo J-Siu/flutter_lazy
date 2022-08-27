@@ -1,3 +1,5 @@
+## 0.4.4
+- Move all extensions to package [lazy_extensions].
 ## 0.4.3
 - Move [jsonPretty] to lazy_log
 ## 0.4.2

@@ -1,6 +1,5 @@
-import 'extensions/date_time.dart';
 import 'package:http/http.dart';
-import 'package:intl/intl.dart';
+import 'package:lazy_extensions/lazy_extensions.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -8,15 +7,6 @@ Future<String> byteStreamToString(Stream<List<int>> stream) =>
     (stream as ByteStream).bytesToString();
 Future<String> mediaStreamToString(Stream<List<int>> stream) =>
     byteStreamToString(stream);
-
-// --- DateTime
-const defaultDateTimeFormat = 'yyyy-MM-dd HH:mm:ss';
-const defaultTimestampFormat = 'yyyy-MM-dd hhmmss';
-
-/// Return `DateTime` from [string] using supplied [format] or [defaultDateTimeFormat] = 'yyyy-MM-dd HH:mm:ss'`
-DateTime dateTimeFromString(String string,
-        {String format = defaultDateTimeFormat}) =>
-    DateFormat(format).parse(string);
 
 /// Shorthand for `DateTime.now()`
 DateTime get now => DateTime.now();

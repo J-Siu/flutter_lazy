@@ -1,6 +1,6 @@
 import '../flutter.dart' as lazy;
-import '../extensions/list.dart';
 import 'package:flutter/material.dart';
+import 'package:lazy_extensions/lazy_extensions.dart';
 
 /// ### Lazy [About] - let you fill in fields and generate a popup
 ///
