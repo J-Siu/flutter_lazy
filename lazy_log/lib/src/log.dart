@@ -1,4 +1,4 @@
-import 'dart:developer' as dev;
+import 'package:flutter/foundation.dart';
 
 /// turn [log] on and off
 bool logEnable = false;
@@ -16,6 +16,7 @@ void log(
   bool forced = false,
 }) {
   if (logEnable || forced) {
-    print(object);
+    // debugPrint(object.toString());
+    debugPrint(object.toString());
   }
 }

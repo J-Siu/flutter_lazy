@@ -1,12 +1,13 @@
 name: lazy_log
 description: Simple log with global [enableLog] to turn on and off. Intended to save time, especially from things that are very repetitive across projects.
 
-version: 1.0.5
+version: 1.0.7
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:
-  sdk: '>=2.17.6 <3.0.0'
+  sdk: ">=2.17.6 <3.0.0"
 
 dev_dependencies:
   lints: ^2.0.0
   test: ^1.16.0
+dependencies: { flutter: { sdk: flutter } }

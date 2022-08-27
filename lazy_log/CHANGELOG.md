@@ -1,3 +1,7 @@
+## 1.0.7
+- `log` switch to `debugPrint`
+## 1.0.6
+- [jsonPretty] catch failed conversion.
 ## 1.0.5
 - Fix double print issue. Only use [print].
 ## 1.0.4
