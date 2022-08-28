@@ -1,3 +1,5 @@
+## 1.1.1
+- update [lazy_g_drive] to handle utf8 String
 ## 1.1.0
 - Fix log
 ## 1.0.1

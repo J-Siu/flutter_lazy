@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:googleapis/drive/v3.dart' as gd;
-import 'package:lazy_collection/lazy_collection.dart' as lazy;
+import 'package:lazy_extensions/lazy_extensions.dart' as lazy;
 import 'package:lazy_g_drive/lazy_g_drive.dart' as lazy;
 import 'package:lazy_log/lazy_log.dart' as lazy;
 import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
@@ -121,9 +121,9 @@ class GSync {
     String debugPrefix = '$runtimeType.remoteLastSaveTime()';
     try {
       lazy.log('$debugPrefix:${gFiles.length}');
-      DateTime lastSaveTime = lazy.dayZero;
+      DateTime lastSaveTime = DateTime(0);
       if (gFiles.isNotEmpty) {
-        lastSaveTime = gFiles.last.modifiedTime ?? lazy.dayZero;
+        lastSaveTime = gFiles.last.modifiedTime ?? DateTime(0);
         lazy.log('$debugPrefix:gFiles.last:\n${lazy.jsonPretty(gFiles.last)}');
         lazy.log(
             '$debugPrefix:lastSaveTime:${gFiles.last.modifiedTime!.toUtc().toIso8601String()}');

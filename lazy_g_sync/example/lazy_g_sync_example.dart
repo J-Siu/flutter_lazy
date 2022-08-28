@@ -1,13 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:googleapis/drive/v3.dart' as gd;
-import 'package:lazy_collection/lazy_collection.dart' as lazy;
-import 'package:lazy_g_drive/lazy_g_drive.dart' as lazy;
 import 'package:lazy_g_sync/lazy_g_sync.dart' as lazy;
-import 'package:lazy_log/lazy_log.dart' as lazy;
 import 'package:lazy_sign_in_google/lazy_sign_in_google.dart' as lazy;
 
-// THIS IS NOT A COMPLETE APP, BUT SAMPLE STARTING POINT
+// THIS IS ***NOT A COMPLETE APP***, BUT SAMPLE STARTING POINT
 
 // Your google sign in should have scope 'https://www.googleapis.com/auth/drive.appdata'
 final globalLazySignIn = lazy.SignInGoogle(
