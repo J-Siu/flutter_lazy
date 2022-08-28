@@ -1,3 +1,5 @@
+## 1.0.2
+- update dependency
 ## 1.0.1
 - Cache [SharedPreferences] instance to improve performance
 ## 1.0.0
