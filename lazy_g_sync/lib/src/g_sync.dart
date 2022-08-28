@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:googleapis/drive/v3.dart' as gd;
-import 'package:lazy_extensions/lazy_extensions.dart' as lazy;
 import 'package:lazy_g_drive/lazy_g_drive.dart' as lazy;
 import 'package:lazy_log/lazy_log.dart' as lazy;
 import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
@@ -256,7 +256,7 @@ class GSync {
       var media = await _lazyGDrive.get(gFile.id!,
           downloadOptions: gd.DownloadOptions.fullMedia);
       if (media is gd.Media) {
-        content = await lazy.mediaStreamToString(media.stream);
+        content = await utf8.decodeStream(media.stream);
         lazy.log('$debugPrefix:size:${content.length} byte');
       } else {
         throw ('$debugPrefix:File is not Google DriveApi Media.');
@@ -281,6 +281,7 @@ class GSync {
         modifiedTime: localSaveTime,
         parents: ['appDataFolder'],
       );
+      // [toMedia] use utf8 encoding
       var media = content.toMedia();
       lazy.log('$debugPrefix:size:${media.length}byte');
       // Upload
