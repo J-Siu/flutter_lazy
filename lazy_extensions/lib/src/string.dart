@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/http.dart';
 
 /// ### Lazy extension for [String]
 extension LazyExtString on String {
@@ -23,3 +24,8 @@ extension LazyExtString on String {
   Stream<List<int>> toByteStream() =>
       Future.value(codeUnits).asStream().asBroadcastStream();
 }
+
+Future<String> byteStreamToString(Stream<List<int>> stream) =>
+    (stream as ByteStream).bytesToString();
+Future<String> mediaStreamToString(Stream<List<int>> stream) =>
+    byteStreamToString(stream);
