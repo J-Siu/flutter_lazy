@@ -1,3 +1,7 @@
+## 0.4.5
+- Move to package [lazy_extensions]:
+  - byteStreamToString(Stream<List<int>> stream)
+  - mediaStreamToString(Stream<List<int>> stream)
 ## 0.4.4
 - Move all extensions to package [lazy_extensions].
 ## 0.4.3
