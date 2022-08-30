@@ -5,6 +5,7 @@ import 'sign_in_ext_moz.dart' as lazy;
 
 const String _schemeMoz = 'moz-extension';
 const String _schemeChrome = 'chrome-extension';
+const String _schemeOrion = 'orion';
 
 /// ### Lazy [SignInExt]
 /// - Build in listener for account status change, and a [SignInMsg] notifier [msg]
@@ -41,7 +42,7 @@ class SignInExt extends lazy.SignIn {
     if (scheme == _schemeChrome) {
       lazy.log('$debugPrefix:redirectUrl:Chrome extension', forced: debugLog);
       _api = lazy.SignInExtChrome(clientId: clientId, scopes: scopes);
-    } else if (scheme == _schemeMoz) {
+    } else if (scheme == _schemeMoz || scheme == _schemeOrion) {
       lazy.log('$debugPrefix:redirectUrl:Firefox extension', forced: debugLog);
       _api = lazy.SignInExtMoz(clientId: clientId, scopes: scopes);
     } else {

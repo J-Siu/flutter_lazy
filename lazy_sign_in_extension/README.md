@@ -1,4 +1,14 @@
-Google sign-in library for Chrome extension and Firefox extension using [lazy_sign_in](https://pub.dev/packages/lazy_sign_in) interface.
+Google sign-in library for extension using [lazy_sign_in](https://pub.dev/packages/lazy_sign_in) interface.
+
+### Support Browser
+
+`lazy_sign_in_extension` auto detect browser and use api accordingly.
+
+Browser|Identity API
+---|---
+Chrome|chrome.identity
+Firefox|browser.identity
+Orion|browser.identity
 
 ### Install
 

@@ -1,3 +1,5 @@
+## 1.1.2
+- Add Orion browser support
 ## 1.1.1
 - update dependency
 ## 1.1.0
