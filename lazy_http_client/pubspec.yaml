@@ -1,5 +1,5 @@
 name: lazy_http_client
-description: Simple http client class that will auto apply specified headers on all request.
+description: Simple http client class that will auto apply specified headers on all requests.
 
 version: 1.0.0
 homepage: https://github.com/j-siu/flutter_lazy

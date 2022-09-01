@@ -1,4 +1,4 @@
-Simple [log] with global [enableLog] to turn on and off and [forced] to override individually. Part of [lazy] collection.
+Simple [log] with global [enableLog] to turn on and off and [forced] to override individually.
 
 ## Features
 

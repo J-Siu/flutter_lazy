@@ -1,5 +1,5 @@
 name: lazy_collection
-description: Intended to save time, especially from things that are very repetitive across projects.
+description: This package will slowly split into smaller packages under [flutter_lazy](https://github.com/j-siu/flutter_lazy) repo.
 
 version: 0.4.5
 homepage: https://github.com/j-siu/flutter_lazy

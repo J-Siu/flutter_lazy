@@ -1,3 +1,5 @@
+This package will slowly split into smaller packages under [flutter_lazy](https://github.com/j-siu/flutter_lazy).
+
 Intended to save time, especially from things that are very repetitive across projects.
 
 Focus

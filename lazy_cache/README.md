@@ -1,4 +1,4 @@
-Lazy [Cache] provides an indexed local storage on top of the shared_preferences package.
+Provides an indexed local storage on top of the shared_preferences package.
 
 ## Features
 
@@ -44,6 +44,7 @@ void main() async {
 
 - Only support `String` data for simplicity.
 - `toJson()` and `fromJson` not provided as entries are not kept in memory.
+- On web, including browser extension, per entry maximum size is ~5M.
 
 ## Additional information
 

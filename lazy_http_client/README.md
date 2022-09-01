@@ -1,4 +1,4 @@
-Simple http client class that will auto apply specified headers on all request.
+Simple http client class that will auto apply specified headers on all requests.
 
 ## Features
 
