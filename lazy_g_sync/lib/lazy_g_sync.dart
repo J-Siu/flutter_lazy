@@ -1,7 +1,7 @@
 /// Support for doing something awesome.
 ///
 /// More dartdocs go here.
-library lazy_g_sync;
+library lazy;
 
 export 'src/g_sync.dart';
 
