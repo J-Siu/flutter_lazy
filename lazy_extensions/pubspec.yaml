@@ -1,6 +1,6 @@
 name: lazy_extensions
 description: Provide extensions and functions for various types to save time and efforts.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:
@@ -9,4 +9,6 @@ environment:
 dev_dependencies:
   lints: ^2.0.0
   test: ^1.16.0
-dependencies: {http: ^0.13.5, intl: ^0.17.0}
+dependencies:
+  http: ^0.13.5
+  intl: ^0.18.0
