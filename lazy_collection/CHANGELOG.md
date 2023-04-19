@@ -1,3 +1,6 @@
+## 0.4.6
+- Update intl to 0.18.0
+- Update lazy_extensions to 1.0.3
 ## 0.4.5
 - Move to package [lazy_extensions]:
   - byteStreamToString(Stream<List<int>> stream)

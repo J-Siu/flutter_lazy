@@ -1,7 +1,7 @@
 name: lazy_collection
 description: This package will slowly split into smaller packages under [flutter_lazy](https://github.com/j-siu/flutter_lazy) repo.
 
-version: 0.4.5
+version: 0.4.6
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:
@@ -12,8 +12,8 @@ dependencies:
     sdk: flutter
   flutter_switch: ^0.3.2
   http: ^0.13.5
-  intl: ^0.17.0
-  lazy_extensions: ^1.0.2
+  intl: ^0.18.0
+  lazy_extensions: ^1.0.3
   lazy_log: ^1.0.7
   theme_provider: ^0.5.0
   universal_html: ^2.0.8
