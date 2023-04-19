@@ -34,7 +34,7 @@ class Switch {
 
   Widget? _themedIcon(IconData? iconData) => Icon(
         iconData,
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
       );
 
   Widget toggle({
@@ -50,14 +50,14 @@ class Switch {
       Padding(
         padding: lazy.padAll(margin),
         child: FlutterSwitch(
-          activeColor: Theme.of(context).backgroundColor,
+          activeColor: Theme.of(context).colorScheme.background,
           activeIcon: _themedIcon(activeIcon),
           activeText: activeText,
           borderRadius: borderRadius,
           disabled: disabled,
           duration: Duration(milliseconds: durationMilliseconds),
           height: height,
-          inactiveColor: Theme.of(context).backgroundColor,
+          inactiveColor: Theme.of(context).colorScheme.background,
           inactiveIcon: _themedIcon(inactiveIcon),
           inactiveText: inactiveText,
           onToggle: onToggle,
@@ -80,13 +80,13 @@ class Switch {
       Padding(
         padding: lazy.padAll(margin),
         child: FlutterSwitch(
-          activeColor: Theme.of(context).backgroundColor,
+          activeColor: Theme.of(context).colorScheme.background,
           activeText: activeText,
           borderRadius: borderRadius,
           disabled: disabled,
           duration: Duration(milliseconds: durationMilliseconds),
           height: height,
-          inactiveColor: Theme.of(context).backgroundColor,
+          inactiveColor: Theme.of(context).colorScheme.background,
           inactiveText: inactiveText,
           onToggle: onToggle,
           padding: padding,
