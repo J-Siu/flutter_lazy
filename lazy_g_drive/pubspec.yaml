@@ -1,13 +1,13 @@
 name: lazy_g_drive
 description: A simple Google Drive Api package mainly design for [AppData] scope operation.
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:
   sdk: '>=2.17.6 <3.0.0'
 
 dependencies:
-  googleapis: ^9.1.0
+  googleapis: ^11.0.0
   lazy_extensions: ^1.0.2
   lazy_http_client: ^1.0.0
   lazy_log: ^1.0.7

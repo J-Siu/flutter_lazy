@@ -1,3 +1,5 @@
+## 1.0.2
+- update dependency
 ## 1.0.1
 - [GDriveStringExt] [toMedia] use [toUtf8] instead of [codeUnit] for conversion.
 ## 1.0.0
