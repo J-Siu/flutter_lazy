@@ -36,7 +36,7 @@ class Cache extends JsonPreference {
   Future _indexSave() async {
     String debugPrefix = '$runtimeType._indexSave()';
     lazy.log(debugPrefix, forced: debugLog || lazy.logEnable);
-    lazy.log(lazy.jsonPretty(_index), forced: debugLog || lazy.logEnable);
+    lazy.log(_index, forced: debugLog || lazy.logEnable);
     List<String> indexStr = _index.toList();
     try {
       String encoded = jsonEncode(indexStr);
@@ -123,7 +123,7 @@ class Cache extends JsonPreference {
 
   /// Add/Set entry with [key] = [data] in local storage
   Future set(String key, String data) async {
-    String debugPrefix = '$runtimeType.set()';
+    String debugPrefix = '$runtimeType.set($key,$data)';
     lazy.log(debugPrefix, forced: debugLog || lazy.logEnable);
     var pref = await getPref();
     _indexAdd(key);
