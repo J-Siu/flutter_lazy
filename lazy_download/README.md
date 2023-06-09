@@ -1,0 +1,1 @@
+The [download] function allow saving of [List<int>] data from webapp to local file.
