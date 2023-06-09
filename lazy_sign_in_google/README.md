@@ -2,9 +2,9 @@
 
 ### Features
 
-Class|File|Description
----|---|---
-[lazy.SignInGoogle]|lazy_sign_in_google.dart|Support Google sign-in in web or app. This is a wrapper of `package:google_sign_in`
+| Class               | File                     | Description                                                                           |
+| ------------------- | ------------------------ | ------------------------------------------------------------------------------------- |
+| [lazy.SignInGoogle] | lazy_sign_in_google.dart | Support Google sign-in in web or app. This is a wrapper of `package:google_sign_in` |
 
 ### Install
 
@@ -15,6 +15,7 @@ flutter pub add lazy_sign_in_google
 ### Usage
 
 #### Web/App
+
 For web page, supply Google OAuth **Web Application** client id.
 
 For standalone app, supply Google OAuth **Chrome Application** client id.
@@ -29,12 +30,12 @@ final lazy.SignInBase globalLazySignIn = lazy.SignInGoogle(clientId: clientId);
 
 ```dart
 Widget buttonSignIn = TextButton(
-  onPressed: () => globalLazySignIn.signInHandler(),
+  onPressed: () => globalLazySignIn.signIn(),
   child: const Text('Sign-In'),
 );
 
 Widget buttonSignOut = TextButton(
-  onPressed: () => globalLazySignIn.signOutHandler(),
+  onPressed: () => globalLazySignIn.signOut(),
   child: const Text('Sign-Out'),
 );
 ```

@@ -85,11 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     Widget buttonSignIn = TextButton(
-      onPressed: () => globalLazySignIn.signInHandler(),
+      onPressed: () => globalLazySignIn.signIn(),
       child: const Text('Sign-In'),
     );
     Widget buttonSignOut = TextButton(
-      onPressed: () => globalLazySignIn.signOutHandler(),
+      onPressed: () => globalLazySignIn.signOut(),
       child: const Text('Sign-Out'),
     );
 

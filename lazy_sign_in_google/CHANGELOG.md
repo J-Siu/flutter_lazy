@@ -1,3 +1,5 @@
+## 2.0.0
+- Update to [lazy_sign_in] 2.0.0
 ## 1.1.2
 - update dependency
 ## 1.1.1

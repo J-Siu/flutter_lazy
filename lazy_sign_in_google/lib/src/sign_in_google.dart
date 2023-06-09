@@ -7,7 +7,10 @@ import 'package:lazy_log/lazy_log.dart' as lazy;
 /// - [GoogleSignIn] wrapper class with a [signInHandler]
 class SignInGoogle extends lazy.SignIn {
   // --- Internal
-  String __token = '';
+  bool _isAuthorized = false;
+  bool _isSignedIn = false;
+  String _token = '';
+
   final lazy.GoogleSignIn _api;
 
   /// - [clientId]
@@ -28,11 +31,11 @@ class SignInGoogle extends lazy.SignIn {
           scopes: scopes,
         ) {
     // #region GSignIn
-    String debugPrefix = '$runtimeType.GSignInGoogleSignIn()';
+    String debugPrefix = '$runtimeType.SignInGoogle()';
     assert(clientId.isNotEmpty, '$debugPrefix:clientId cannot be empty');
-    lazy.log('$debugPrefix:GoogleSignIn()', forced: debugLog);
     _api.onCurrentUserChanged.listen((_) {
-      _extractToken().then((token) => _token = token);
+      _isSignedIn = _api.currentUser != null;
+      msg.status = _isSignedIn;
     });
     lazy.log('$debugPrefix:GoogleSignIn().listen():done', forced: debugLog);
     // #endregion
@@ -40,9 +43,18 @@ class SignInGoogle extends lazy.SignIn {
 
   // --- Output
 
+  @override
+  bool get isAuthorized => _isAuthorized;
+
+  @override
+  bool get isSignedIn => _isSignedIn;
+
+  @override
+  String get displayName => _api.currentUser?.displayName ?? '';
+
   /// Return a sign in access [token] or empty string
   @override
-  String get token => __token;
+  String get token => _token;
 
   /// Return sign in account avatar url
   @override
@@ -52,10 +64,9 @@ class SignInGoogle extends lazy.SignIn {
   @override
   String get redirectUrl => '';
 
-  /// - Return access [token] if sign-in successful,
   /// - Throw if sign in failed
   @override
-  Future signInHandler({
+  Future signIn({
     bool reAuthenticate = true,
     bool suppressErrors = true,
     bool silentOnly = false,
@@ -65,65 +76,43 @@ class SignInGoogle extends lazy.SignIn {
     lazy.log(debugPrefix, forced: debugLog);
 
     try {
-      String tmpToken = '';
-      lazy.log('$debugPrefix:_googleSignIn.signInSilently()', forced: debugLog);
+      lazy.log('$debugPrefix:_api.signInSilently()', forced: debugLog);
       await _api
           .signInSilently(
               reAuthenticate: reAuthenticate, suppressErrors: suppressErrors)
-          .onError((e, _) => throw ('_googleSignIn.signInSilently():$e'));
-      tmpToken = await _extractToken();
+          .onError((e, _) => throw ('_api.signInSilently():$e'));
 
       // Sign-in silently failed -> try pop-up
-      if (tmpToken.isEmpty && !silentOnly) {
-        lazy.log('$debugPrefix:_googleSignIn.signIn()', forced: debugLog);
-        await _api
-            .signIn()
-            .onError((e, _) => throw ('_googleSignIn.signIn():$e'));
-        tmpToken = await _extractToken();
+      if (_api.currentUser == null && !silentOnly) {
+        lazy.log('$debugPrefix:_api.signIn()', forced: debugLog);
+        await _api.signIn().onError((e, _) => throw ('_api.signIn():$e'));
       }
-
-      // Sign-in failed -> throw
-      if (tmpToken.isEmpty) {
-        lazy.log('$debugPrefix:Sign-in failed', forced: debugLog);
-        throw ('Sign-in failed');
-      }
-
-      _token = tmpToken;
-      return token;
     } catch (e) {
-      lazy.log('$debugPrefix:catch:$e', forced: debugLog);
       throw '$debugPrefix:catch:$e';
     }
     // #endregion
   }
 
-  /// - [token] return should always be empty
   /// - Throw on sign-out error
   @override
-  Future signOutHandler() async {
+  Future signOut() async {
     // #region signOutHandler
     var debugPrefix = '$runtimeType.signInHandler()';
     try {
-      await _api
-          .signOut()
-          .onError((e, _) => throw ('_googleSignIn.g=signOut():error:$e'));
-    } catch (error) {
-      throw '$debugPrefix:catch:$error';
+      await _api.signOut().onError((e, _) => throw ('_api.signOut():$e'));
+    } catch (e) {
+      throw '$debugPrefix:catch:$e';
     }
     // #endregion
   }
 
-  /// [_token] is for internal use
-  /// - Need private setter to trigger [msg]
-  set _token(String v) {
-    if (__token != v) {
-      __token = v;
-      msg.value = lazy.SignInMsg(token: v);
-    }
-  }
-
-  Future<String> _extractToken() async {
-    var auth = await _api.currentUser?.authentication;
-    return auth?.accessToken ?? '';
+  @override
+  Future<bool> authorize() async {
+    var debugPrefix = '$runtimeType.isAuthorized()';
+    lazy.log(debugPrefix, forced: debugLog);
+    _isAuthorized = await _api.requestScopes(scopes);
+    _token = (await _api.currentUser?.authHeaders)?['Authorization'] ?? '';
+    _token = _token.replaceAll('Bearer ', '');
+    return _isAuthorized;
   }
 }
