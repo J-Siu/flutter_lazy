@@ -1,8 +1,0 @@
-name: lazy_collection
-description: This package is no longer maintained. Its functions are split into smaller packages under [flutter_lazy](https://github.com/j-siu/flutter_lazy) repo.
-
-version: 0.4.7
-homepage: https://github.com/j-siu/flutter_lazy
-
-environment:
-  sdk: '>=3.0.2 <4.0.0'
