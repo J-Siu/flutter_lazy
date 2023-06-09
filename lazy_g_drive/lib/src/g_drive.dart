@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'defaults.dart';
 import 'package:googleapis/drive/v3.dart' as gd;
+import 'package:lazy_extensions/lazy_extensions.dart' as lazy;
 import 'package:lazy_log/lazy_log.dart' as lazy;
 import 'package:lazy_http_client/lazy_http_client.dart' as lazy;
 
@@ -51,7 +52,7 @@ class GDrive {
   }) async {
     String debugPrefix = '$runtimeType.create()';
     try {
-      lazy.log('$debugPrefix:\n${lazy.jsonPretty(file)}');
+      lazy.log('$debugPrefix:\n${file.jsonPretty()}');
       return _driveApi.files.create(file, uploadMedia: uploadMedia);
     } catch (e) {
       throw ('$debugPrefix:$e');
@@ -110,11 +111,11 @@ class GDrive {
       String q = "name: '$name'";
       List<gd.File> gFiles = (await list(q: q)).files ?? [];
       if (debugLogList) {
-        lazy.log('$debugPrefix:gFiles:\n${lazy.jsonPretty(gFiles)}');
+        lazy.log('$debugPrefix:gFiles:\n${gFiles.jsonPretty()}');
       }
       // Get file meta, which contain id
       if (gFiles.isEmpty) throw ('$name not found.');
-      lazy.log('$debugPrefix:gFiles.last:\n${lazy.jsonPretty(gFiles.last)}');
+      lazy.log('$debugPrefix:gFiles.last:\n${gFiles.last.jsonPretty()}');
       return gFiles.last;
     } catch (e) {
       throw ('$debugPrefix:$e');

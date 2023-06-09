@@ -1,3 +1,4 @@
+import 'package:lazy_extensions/lazy_extensions.dart';
 import 'package:lazy_g_drive/lazy_g_drive.dart' as lazy;
 import 'package:lazy_log/lazy_log.dart' as lazy;
 
@@ -20,5 +21,5 @@ void main() async {
   // Upload
   var result = await gdrive.create(file: fileMeta, uploadMedia: media);
 
-  lazy.log(lazy.jsonPretty(result));
+  lazy.log(result.jsonPretty());
 }
