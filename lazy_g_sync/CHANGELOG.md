@@ -1,3 +1,6 @@
+## 2.0.0
+- update to googleapis 11.2.0
+- decouple with lazy_sign_in
 ## 1.1.2
 - Sync content use utf8 encode/decode
 ## 1.1.1

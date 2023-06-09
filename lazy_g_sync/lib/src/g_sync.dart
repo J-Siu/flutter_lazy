@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:googleapis/drive/v3.dart' as gd;
+import 'package:lazy_extensions/lazy_extensions.dart';
 import 'package:lazy_g_drive/lazy_g_drive.dart' as lazy;
 import 'package:lazy_log/lazy_log.dart' as lazy;
-import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
 
 /// ### Lazy [GSync]
 /// - Syncing single file with Google Drive `appData` space
@@ -30,9 +30,7 @@ class GSync {
 
   // --- Input
 
-  /// A [lazy.SignIn] instance, initialized with the desired [scope]
-  /// - [GSignIn] default [scope] is [DriveApi.driveAppdataScope] | https://www.googleapis.com/auth/drive.appdata
-  final lazy.SignIn lazyGSignIn;
+  String token = '';
 
   /// `Listenable` to trigger [sync] when [enableAutoSync] is `true`
   /// - Value/content of the `Listenable` is not being used.
@@ -53,7 +51,6 @@ class GSync {
   void Function(String, DateTime?)? setContent;
 
   GSync({
-    required this.lazyGSignIn,
     this.autoSyncIntervalMin = 10,
     this.getFilename,
     this.getLocalContent,
@@ -106,8 +103,6 @@ class GSync {
       if (v) {
         // Enable Sites preference saving to trigger sync()
         localSaveNotifier!.addListener(() => sync());
-        // Sync once when enable
-        sync();
       } else {
         // Disable Sites preference saving to trigger sync()
         localSaveNotifier!.removeListener(() => sync());
@@ -124,7 +119,7 @@ class GSync {
       DateTime lastSaveTime = DateTime(0);
       if (gFiles.isNotEmpty) {
         lastSaveTime = gFiles.last.modifiedTime ?? DateTime(0);
-        lazy.log('$debugPrefix:gFiles.last:\n${lazy.jsonPretty(gFiles.last)}');
+        lazy.log('$debugPrefix:gFiles.last:\n${gFiles.last.jsonPretty()}');
         lazy.log(
             '$debugPrefix:lastSaveTime:${gFiles.last.modifiedTime!.toUtc().toIso8601String()}');
       }
@@ -138,9 +133,12 @@ class GSync {
   /// - interval always count from [lastSync].
   bool get enableAutoSync => _enableAutoSync;
   set enableAutoSync(bool v) {
+    String debugPrefix = '$runtimeType.enableAutoSync($v)';
+    lazy.log(debugPrefix);
     if (_enableAutoSync != v) {
       _enableAutoSync = v;
       if (v) {
+        sync();
         // add 30min listener
         _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
           Duration sinceLastSync = DateTime.now().difference(_lastSync);
@@ -172,11 +170,12 @@ class GSync {
   Future sync({
     bool forceDownload = false,
     bool forceUpload = false,
+    bool ignoreError = false,
   }) async {
     String debugPrefix = '$runtimeType.sync()';
     assert(!(forceDownload == true && forceUpload == true),
         '[forceDownload] and [forceUpload] cannot be `true` at the same time.');
-    if (!syncing.value) {
+    if (!syncing.value && (!syncError.value || ignoreError)) {
       lazy.log(debugPrefix);
       syncing.value = true;
       _lastSync = DateTime.now();
@@ -221,10 +220,7 @@ class GSync {
   Future<List<gd.File>> remoteFiles() async {
     String debugPrefix = '$runtimeType.remoteFiles()';
     try {
-      // Login + setup GDrive
-      _lazyGDrive.token = await lazyGSignIn.signInHandler();
-
-      lazy.log('$debugPrefix:done sign-in');
+      _lazyGDrive.token = token;
       // remote info
       String q = "name: '$filename'";
       var gFileList = await _lazyGDrive.list(
@@ -252,14 +248,14 @@ class GSync {
 
     try {
       String content = '';
-      _lazyGDrive.token = await lazyGSignIn.signInHandler();
+      _lazyGDrive.token = token;
       var media = await _lazyGDrive.get(gFile.id!,
           downloadOptions: gd.DownloadOptions.fullMedia);
       if (media is gd.Media) {
         content = await utf8.decodeStream(media.stream);
         lazy.log('$debugPrefix:size:${content.length} byte');
       } else {
-        throw ('$debugPrefix:File is not Google DriveApi Media.');
+        throw ('File is not Google DriveApi Media.');
       }
       // Apply to sites
       setContent!(content, gFile.modifiedTime);
@@ -274,7 +270,7 @@ class GSync {
 
     try {
       // Login + setup GDrive
-      _lazyGDrive.token = await lazyGSignIn.signInHandler();
+      _lazyGDrive.token = token;
       // File meta + content
       var file = lazy.gDriveFileMeta(
         name: filename,
@@ -286,8 +282,7 @@ class GSync {
       lazy.log('$debugPrefix:size:${media.length}byte');
       // Upload
       var result = await _lazyGDrive.create(file: file, uploadMedia: media);
-      lazy.log(
-          '$debugPrefix:result(should be empty):\n${lazy.jsonPretty(result)}');
+      lazy.log('$debugPrefix:result(should be empty):\n${result.jsonPretty()}');
     } catch (e) {
       lazy.log('$debugPrefix:catch:$e');
     }
