@@ -4,7 +4,10 @@ const String defaultDateTimeFormat = 'yyyy-MM-dd HH:mm:ss';
 const String defaultTimestampFormat = 'yyyy-MM-dd hhmmss';
 
 /// ### Lazy extension for [DateTime]
-extension LazyExtDataTime on DateTime {
+extension LazyExtDateTime on DateTime {
+  static get dayZero => DateTime(0);
+  static get zeroDay => DateTime(0);
+
   /// Return [String] in format: [defaultTimestampFormat] = `yyyy-MM-dd hhmmss`
   String toTimestamp() => DateFormat(defaultTimestampFormat).format(this);
 

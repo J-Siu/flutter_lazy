@@ -7,6 +7,7 @@ Extensions|Type
 LazyExtByteData|ByteDate
 LazyExtDataTime|DateTime
 LazyExtList|List
+LazyExtObject|Object
 LazyExtString|String
 LazyExtUint8List|Uint8List
 

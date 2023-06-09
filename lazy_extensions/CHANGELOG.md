@@ -1,3 +1,8 @@
+## 2.0.0
+- Add LazyExtObject
+- Add base.dart
+- LazyExtDateTime
+  - add dayZero, zeroDay shorthand
 ## 1.0.3
 - Update intl to 0.18.0
 ## 1.0.2
