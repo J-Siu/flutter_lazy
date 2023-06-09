@@ -1,3 +1,5 @@
+## 0.4.7
+- This package is no longer maintained. Its functions are split into smaller packages under [flutter_lazy](https://github.com/j-siu/flutter_lazy).
 ## 0.4.6
 - Update intl to 0.18.0
 - Update lazy_extensions to 1.0.3
