@@ -1,3 +1,14 @@
+## 2.0.0
+- update dependency
+- [SignInMsg] replaced by [IsSignIn] with ChangeNotifier
+- [SignIn]
+  - added ChangeNotifier support
+  - added bool [isAuthorized]
+  - added bool [isSignedIn]
+  - added String [displayName]
+  - added get [token]
+  - [signInHandler] changed to [signIn]
+  - [signOutHandler] changed to [signOut]
 ## 1.1.1
 - update dependency
 ## 1.1.0

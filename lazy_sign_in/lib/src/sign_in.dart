@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'sign_in_msg.dart';
+import 'is_signed_in.dart';
 import 'package:flutter/foundation.dart';
 
 /// ### Lazy [SignIn]
 /// - Build in listener for account status change, and a [SignInMsg] notifier [msg]
-abstract class SignIn {
+abstract class SignIn with ChangeNotifier {
   /// [scopes] of sign-in
   final List<String> scopes;
 
@@ -40,26 +40,35 @@ abstract class SignIn {
 
   // --- Output
 
-  /// A [SignInMsg] notifier. Trigger whenever [token] value changes.
-  ValueNotifier<SignInMsg> msg = ValueNotifier<SignInMsg>(SignInMsg());
+  /// [IsSignIn] notifier. Trigger whenever signin status changes.
+  IsSignedIn msg = IsSignedIn();
 
-  /// Return a sign in access [token] or empty string
-  String get token;
+  bool get isAuthorized;
+
+  bool get isSignedIn;
+
+  /// Return username
+  String get displayName;
 
   /// Return sign in account avatar url
   String get photoUrl;
 
-  /// Return redirectUri(only applicable for Firefox extension)
+  /// Return redirectUri(only applicable for extension)
   String get redirectUrl;
+
+  /// Return a sign in access [token] or empty string
+  String get token;
 
   /// - Return access [token] if sign-in successful,
   /// - Return empty if sign in failed
-  Future signInHandler({
+  Future signIn({
     bool reAuthenticate = true,
     bool suppressErrors = true,
     bool silentOnly = false,
   });
 
   /// - [token] return should always be empty
-  Future signOutHandler();
+  Future signOut();
+
+  Future<bool> authorize();
 }

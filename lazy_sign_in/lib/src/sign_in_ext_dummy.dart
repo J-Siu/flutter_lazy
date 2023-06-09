@@ -19,9 +19,17 @@ class SignInDummy extends SignIn {
 
   // --- Output
 
+  /// Dummy implementation, always return false
+  @override
+  bool get isAuthorized => false;
+
+  /// Dummy implementation, always return false
+  @override
+  bool get isSignedIn => false;
+
   /// Dummy implementation, always return ''
   @override
-  String get token => '';
+  String get displayName => '';
 
   /// Dummy implementation, always return ''
   @override
@@ -33,7 +41,11 @@ class SignInDummy extends SignIn {
 
   /// Dummy implementation, always return ''
   @override
-  Future signInHandler({
+  String get token => '';
+
+  /// Dummy implementation, always return ''
+  @override
+  Future signIn({
     bool reAuthenticate = true,
     bool suppressErrors = true,
     bool silentOnly = false,
@@ -43,7 +55,12 @@ class SignInDummy extends SignIn {
 
   /// Dummy implementation, always return ''
   @override
-  Future signOutHandler() async {
+  Future signOut() async {
     return '';
+  }
+
+  @override
+  Future<bool> authorize() async {
+    return false;
   }
 }
