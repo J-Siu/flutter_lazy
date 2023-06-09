@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:lazy_log/lazy_log.dart' as lazy;
+import 'package:lazy_extensions/lazy_extensions.dart' as lazy;
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// [JsonPreference] - Json object with [SharedPreferences]
@@ -102,7 +103,7 @@ class JsonPreference {
 
   /// Return pretty print json
   @override
-  String toString() => lazy.jsonPretty(obj);
+  String toString() => obj.jsonPretty();
 
   /// load preference from local storage
   /// - [load] use [fromJson] with [noSave] wrapper to apply data
@@ -214,7 +215,7 @@ class JsonPreference {
     var pref = await getPref();
     // When saving/adding default for 1st run we don't want to update time
     if (!noSaveTime) await _saveTime(dateTime: dateTime);
-    String json = lazy.jsonPretty(this);
+    String json = jsonPretty();
     await pref.setString(key, json);
     if (saved != null) saved();
     lazy.log('$debugPrefix:${json.length}(byte):noSaveTime:$noSaveTime',
