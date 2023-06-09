@@ -1,0 +1,25 @@
+name: lazy_ui_utils
+description: Collection of flutter UI utilities and widgets
+version: 0.0.1
+homepage: https://github.com/j-siu/flutter_lazy
+
+environment:
+  sdk: '>=3.0.2 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_switch: ^0.3.2
+  theme_provider: ^0.6.0
+  lazy_extensions: ^2.0.0
+  lazy_log: ^2.0.0
+  # lazy_extensions:
+  #   path: ../lazy_extensions
+  # lazy_log:
+  #   path: ../lazy_log
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
