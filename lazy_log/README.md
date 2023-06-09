@@ -2,11 +2,9 @@ Simple [log] with global [enableLog] to turn on and off and [forced] to override
 
 ## Features
 
-
 Name|Api Stable|Description
 ---|---|---
 [log]|yes|Simple log
-[jsonPretty]|yes|Commonly use to print object
 
 ## Getting started
 
