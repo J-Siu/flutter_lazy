@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 // Uncomment following for Chrome/Firefox extension
 import 'package:lazy_sign_in_extension/lazy_sign_in_extension.dart' as lazy;
 
-final lazy.SignIn globalLazySignIn = lazy.SignInExt(clientId: clientId);
+// Uncomment following for Chrome extension
+final globalLazySignIn = lazy.SignInExtChrome(clientId: clientId);
+
+// Uncomment following for Firefox extension
+// final globalLazySignIn = lazy.SignInExtMoz(clientId: clientId);
 
 // // Uncomment following for Web/App
 // import 'package:lazy_sign_in_google/lazy_sign_in_google.dart' as lazy;
@@ -81,11 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     Widget buttonSignIn = TextButton(
-      onPressed: () => globalLazySignIn.signInHandler(),
+      onPressed: () => globalLazySignIn.signIn(),
       child: const Text('Sign-In'),
     );
     Widget buttonSignOut = TextButton(
-      onPressed: () => globalLazySignIn.signOutHandler(),
+      onPressed: () => globalLazySignIn.signOut(),
       child: const Text('Sign-Out'),
     );
 

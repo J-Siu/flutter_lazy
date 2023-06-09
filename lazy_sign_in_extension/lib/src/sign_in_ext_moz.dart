@@ -8,7 +8,9 @@ import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
 /// - Build in listener for account status change, and a [SignInMsg] notifier [msg]
 class SignInExtMoz extends lazy.SignIn {
   // --- Internal
+  bool _isSignedIn = false;
   String __token = '';
+  String _displayName = '';
   String _photoUrl = '';
   final ApiMoz _api;
   //
@@ -32,7 +34,7 @@ class SignInExtMoz extends lazy.SignIn {
           scopes: scopes,
         ) {
     // #region GSignIn
-    String debugPrefix = '$runtimeType.GSignInExtMoz()';
+    String debugPrefix = '$runtimeType()';
     assert(clientId.isNotEmpty, '$debugPrefix:clientId cannot be empty');
     assert(Uri.base.scheme == 'moz-extension', 'Must run as moz extension.');
     lazy.log(
@@ -47,9 +49,14 @@ class SignInExtMoz extends lazy.SignIn {
 
   // --- Output
 
-  /// Return a sign in access [token] or empty string
   @override
-  String get token => __token;
+  bool get isAuthorized => true;
+
+  @override
+  bool get isSignedIn => _isSignedIn;
+
+  @override
+  String get displayName => _displayName;
 
   @override
   String get photoUrl => _photoUrl;
@@ -58,16 +65,19 @@ class SignInExtMoz extends lazy.SignIn {
   @override
   String get redirectUrl => _api.redirectUrl;
 
-  /// - Return access [token] if sign-in successful,
+  /// Return a sign in access [token] or empty string
+  @override
+  String get token => __token;
+
   /// - Throw if sign in failed
   @override
-  Future signInHandler({
+  Future signIn({
     bool reAuthenticate = true,
     bool suppressErrors = true,
     bool silentOnly = false,
   }) async {
     // #region signInHandler
-    var debugPrefix = '$runtimeType.signInHandler()';
+    var debugPrefix = '$runtimeType.signIn()';
     lazy.log(debugPrefix, forced: debugLog);
 
     Duration secondSinceSignIn =
@@ -108,27 +118,38 @@ class SignInExtMoz extends lazy.SignIn {
         _apiFirefoxSignInTime = DateTime.now().toUtc();
         _token = tmpToken;
         _photoUrl = await _getPhotoUrl();
-        return token;
+        _isSignedIn = true;
+        msg.status = _isSignedIn;
       } catch (e) {
         lazy.log('$debugPrefix:catch:$e', forced: debugLog);
         throw ('$debugPrefix:$e');
       }
     } else {
-      return token;
+      _isSignedIn = false;
+      msg.status = _isSignedIn;
     }
     // #endregion
   }
 
-  /// - [token] return should always be empty
   /// - Throw on sign-out error
   @override
-  Future signOutHandler() async {
+  Future signOut() async {
     // #region signOutHandler
-    var debugPrefix = '$runtimeType.signInHandler()';
+    var debugPrefix = '$runtimeType.signOut()';
     lazy.log(debugPrefix);
+    _displayName = '';
+    _photoUrl = '';
     _token = '';
-    return _token;
+    _isSignedIn = false;
+    msg.status = _isSignedIn;
     // #endregion
+  }
+
+  @override
+  Future<bool> authorize() async {
+    var debugPrefix = '$runtimeType.authorize()';
+    lazy.log(debugPrefix, forced: debugLog);
+    return true;
   }
 
   /// [_token] is for internal use
@@ -138,12 +159,11 @@ class SignInExtMoz extends lazy.SignIn {
     if (__token != v) {
       __token = v;
       if (v.isEmpty) _photoUrl = '';
-      msg.value = lazy.SignInMsg(token: v);
     }
   }
 
   Future<String> _getPhotoUrl() async {
-    String debugPrefix = '$runtimeType.getPhotoUrl()';
+    String debugPrefix = '$runtimeType._getPhotoUrl()';
     lazy.log(runtimeType);
     if (_token.isNotEmpty) {
       var url =
@@ -164,7 +184,7 @@ class SignInExtMoz extends lazy.SignIn {
 
   /// expire time in seconds, have to compare with sign in time
   int _extractExpireIn(String res) {
-    var debugPrefix = '$runtimeType._extractTokenExpireApiFirefox()';
+    var debugPrefix = '$runtimeType._extractTokenExpireIn()';
     var resUri = Uri.parse(res.replaceAll('#', '?'));
     Map<String, String> resParams = resUri.queryParameters;
     resParams

@@ -2,6 +2,7 @@
 library ext_api_chrome;
 
 import 'dart:async';
+import 'dart:js_util';
 import 'package:js/js.dart';
 import 'package:lazy_log/lazy_log.dart' as lazy;
 
@@ -28,30 +29,22 @@ class GetAuthTokenResult {
 }
 
 @JS('chrome.identity.getAuthToken')
-external jsChromeIdentityGetAuthToken(TokenDetails details, Function callback);
+// external jsChromeIdentityGetAuthToken(TokenDetails details, Function callback);
+external jsChromeIdentityGetAuthToken(TokenDetails details);
 
 class ApiChrome {
   List<String>? scopes;
 
   ApiChrome({this.scopes});
 
-  /// Change js callback to dart future
-  Future identityGetAuthToken(TokenDetails details) async {
+  Future<GetAuthTokenResult> identityGetAuthToken(TokenDetails details) async {
     String debugPrefix = '$runtimeType.identityGetAuthToken()';
     lazy.log(debugPrefix);
 
-    Completer c = Completer();
+    lazy.log("$debugPrefix:jsChromeIdentityGetAuthToken:before");
+    var promise = jsChromeIdentityGetAuthToken(details);
+    lazy.log("$debugPrefix:jsChromeIdentityGetAuthToken:after");
 
-    // Javascript callback with 2 parameters
-    callback(String? token, List? scopes) {
-      // js cannot assign to class object to callback
-      // c.complete(JsGetAuthTokenResult(token: token, grantedScopes: scopes));
-      // Create map object directly
-      c.complete({'token': token, 'grantedScopes': scopes});
-    }
-
-    jsChromeIdentityGetAuthToken(details, allowInterop(callback));
-
-    return c.future;
+    return promiseToFuture(promise);
   }
 }

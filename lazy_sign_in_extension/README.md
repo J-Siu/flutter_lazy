@@ -4,11 +4,11 @@ Google sign-in library for extension using [lazy_sign_in](https://pub.dev/packag
 
 `lazy_sign_in_extension` auto detect browser and use api accordingly.
 
-Browser|Identity API
----|---
-Chrome|chrome.identity
-Firefox|browser.identity
-Orion|browser.identity
+| Browser | Identity API     |
+| ------- | ---------------- |
+| Chrome  | chrome.identity  |
+| Firefox | browser.identity |
+| Orion   | browser.identity |
 
 ### Install
 
@@ -28,12 +28,12 @@ final lazy.SignInBase globalLazySignIn = lazy.SignInExt(clientId: clientId);
 
 ```dart
 Widget buttonSignIn = TextButton(
-  onPressed: () => globalLazySignIn.signInHandler(),
+  onPressed: () => globalLazySignIn.signIn(),
   child: const Text('Sign-In'),
 );
 
 Widget buttonSignOut = TextButton(
-  onPressed: () => globalLazySignIn.signOutHandler(),
+  onPressed: () => globalLazySignIn.signOut(),
   child: const Text('Sign-Out'),
 );
 ```

@@ -44,7 +44,7 @@ class ApiMoz {
   ApiMoz({
     required this.clientId,
     this.scopes = const ['email'],
-    this.authUrl = 'https://accounts.google.com/o/oauth2/v2/auth',
+    this.authUrl = 'https://accounts.google.com/o/oauth2/auth',
   });
 
   String get redirectUrl => jsGetRedirectUrl();
