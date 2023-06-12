@@ -19,14 +19,6 @@ class SignInDummy extends SignIn {
 
   // --- Output
 
-  /// Dummy implementation, always return false
-  @override
-  bool get isAuthorized => false;
-
-  /// Dummy implementation, always return false
-  @override
-  bool get isSignedIn => false;
-
   /// Dummy implementation, always return ''
   @override
   String get displayName => '';
@@ -38,10 +30,6 @@ class SignInDummy extends SignIn {
   /// Dummy implementation, always return ''
   @override
   String get redirectUrl => '';
-
-  /// Dummy implementation, always return ''
-  @override
-  String get token => '';
 
   /// Dummy implementation, always return ''
   @override

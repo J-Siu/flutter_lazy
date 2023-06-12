@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'is_signed_in.dart';
 import 'package:flutter/foundation.dart';
 
 /// ### Lazy [SignIn]
@@ -40,12 +39,11 @@ abstract class SignIn with ChangeNotifier {
 
   // --- Output
 
-  /// [IsSignIn] notifier. Trigger whenever signin status changes.
-  IsSignedIn msg = IsSignedIn();
+  /// Trigger whenever signin status changes.
+  ValueNotifier<bool> isSignedIn = ValueNotifier<bool>(false);
 
-  bool get isAuthorized;
-
-  bool get isSignedIn;
+  /// Update by [authorize()]
+  ValueNotifier<String> token = ValueNotifier<String>('');
 
   /// Return username
   String get displayName;
@@ -55,9 +53,6 @@ abstract class SignIn with ChangeNotifier {
 
   /// Return redirectUri(only applicable for extension)
   String get redirectUrl;
-
-  /// Return a sign in access [token] or empty string
-  String get token;
 
   /// - Return access [token] if sign-in successful,
   /// - Return empty if sign in failed

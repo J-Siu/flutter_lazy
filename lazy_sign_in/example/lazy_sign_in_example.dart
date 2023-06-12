@@ -61,12 +61,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    globalLazySignIn.msg.addListener(() => _signInHandler());
+    globalLazySignIn.isSignedIn.addListener(() => _signInHandler());
   }
 
   @override
   void dispose() {
-    globalLazySignIn.msg.removeListener(() => _signInHandler());
+    globalLazySignIn.isSignedIn.removeListener(() => _signInHandler());
     super.dispose();
   }
 

@@ -1,3 +1,10 @@
+## 2.1.0
+- Added ValueNotifier
+  - ValueNotifier<bool> isSignedIn
+  - ValueNotifier<String> token
+- Removed
+  - [SignInMsg]
+
 ## 2.0.0
 - update dependency
 - [SignInMsg] replaced by [IsSignIn] with ChangeNotifier
