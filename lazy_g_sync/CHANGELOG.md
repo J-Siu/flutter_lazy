@@ -1,3 +1,5 @@
+## 2.1.0
+- Simplify api
 ## 2.0.0
 - update to googleapis 11.2.0
 - decouple with lazy_sign_in

@@ -14,15 +14,16 @@ class GSync {
 
   final lazy.GDrive _lazyGDrive = lazy.GDrive();
   DateTime _lastSync = DateTime(0);
-  Timer? _timer;
-  bool _enableAutoSync = false;
-  bool _enableSync = false;
+  Listenable? _localSaveNotifier;
+  Timer? _autoTimer;
+  bool _auto = false;
+  bool _enable = false;
 
   // --- Output
 
   /// `true` on [sync] error.
   /// `false` on [sync] success(no error).
-  final ValueNotifier<bool> syncError = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> error = ValueNotifier<bool>(false);
 
   /// `true` when [sync] start
   /// `false` when [sync] stop
@@ -32,38 +33,51 @@ class GSync {
 
   String token = '';
 
-  /// `Listenable` to trigger [sync] when [enableAutoSync] is `true`
-  /// - Value/content of the `Listenable` is not being used.
-  Listenable? localSaveNotifier;
-
-  /// Should return last local save time
+  /// A callback, should return last local save time
   DateTime Function()? getLocalSaveTime;
 
-  /// Should return the content in [String] to be saved remotely
+  /// A callback, should return local content in [String] to be saved remotely
   String Function()? getLocalContent;
 
-  /// Should return the remote filename in [String] to be used remotely
+  /// A callback, should return a filename in [String] to be used remotely
   String Function()? getFilename;
 
-  /// Call when content is downloaded from remote
+  /// A callback, trigger when content is downloaded from remote
   /// - [String] : content of the download
   /// - [DateTime]? : remote last save time. Can be use to set local save time when applying content locally.
-  void Function(String, DateTime?)? setContent;
+  void Function(String, DateTime?)? setLocalContent;
 
   GSync({
-    this.autoSyncIntervalMin = 10,
     this.getFilename,
     this.getLocalContent,
     this.getLocalSaveTime,
-    this.localSaveNotifier,
-    this.setContent,
-  });
+    this.setLocalContent,
+    Listenable? localSaveNotifier,
+  }) {
+    this.localSaveNotifier = localSaveNotifier;
+  }
 
-  /// Return last sync `DateTime`
+  /// [enable]
+  /// - true : allow sync all functions
+  /// - false(default) : disable sync all functions
+  ///
+  /// Changing from `false` to `true` will trigger [sync] once
+  bool get enable => _enable;
+  set enable(bool v) {
+    if (_enable != v) {
+      _enable = v;
+      if (_enable) {
+        sync();
+      }
+    }
+  }
+
+  /// Return `DateTime` of last [sync()] successful run.
+  /// [lastSync] has no significant on sync logic.
   DateTime get lastSync => _lastSync;
 
   /// Return last save time of content/data saved locally (eg. in [shared_preferences])
-  ///
+  /// Result from [getLocalSaveTime]
   /// [getLocalSaveTime] must be set
   DateTime get localSaveTime {
     assert(
@@ -72,7 +86,7 @@ class GSync {
   }
 
   /// Return filename used when saving to Google Drive
-  ///
+  /// Result from [getFilename]
   /// [getFilename] must be set
   String get filename {
     assert(getFilename != null, '[getFilename] function not provided.');
@@ -80,7 +94,7 @@ class GSync {
   }
 
   /// Return content to be saved to Google Drive
-  ///
+  /// Result from [getLocalContent]
   /// [getLocalContent] must be set
   String get content {
     assert(getLocalContent != null, '[getLocalContent] function not provided.');
@@ -92,21 +106,18 @@ class GSync {
   /// Auto sync interval, time between [lastSync] till next sync
   int autoSyncIntervalMin = 10;
 
-  /// [enableLocalSaveNotifier] control listening to [localSaveNotifier]
-  /// - Start listening if `true`
-  /// - Stop listening if `false`
-  bool get enableLocalSaveNotifier => _enableSync;
-  set enableLocalSaveNotifier(bool v) {
-    assert(localSaveNotifier != null, '[localSaveNotifier] not provided.');
-    if (_enableSync != v) {
-      _enableSync = v;
-      if (v) {
-        // Enable Sites preference saving to trigger sync()
-        localSaveNotifier!.addListener(() => sync());
-      } else {
-        // Disable Sites preference saving to trigger sync()
-        localSaveNotifier!.removeListener(() => sync());
-      }
+  /// [localSaveNotifier]
+  /// - Start listening if not null
+  /// - Stop listening if null
+  Listenable? get localSaveNotifier => _localSaveNotifier;
+  set localSaveNotifier(Listenable? v) {
+    if (_localSaveNotifier != v) {
+      // 1. Clear current listener
+      _localSaveNotifier?.removeListener(() => sync());
+      // 2. Update notifier
+      _localSaveNotifier = v;
+      // 3. Enable new listener
+      _localSaveNotifier?.addListener(() => sync());
     }
   }
 
@@ -129,59 +140,58 @@ class GSync {
     }
   }
 
-  /// [enableAutoSync] control period sync with interval = [autoSyncIntervalMin]
-  /// - interval always count from [lastSync].
-  bool get enableAutoSync => _enableAutoSync;
-  set enableAutoSync(bool v) {
+  /// [auto] control periodic run of [sync] with interval = [autoSyncIntervalMin]
+  bool get auto => _auto;
+  set auto(bool v) {
     String debugPrefix = '$runtimeType.enableAutoSync($v)';
     lazy.log(debugPrefix);
-    if (_enableAutoSync != v) {
-      _enableAutoSync = v;
+    if (_auto != v) {
+      _auto = v;
       if (v) {
-        sync();
-        // add 30min listener
-        _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
-          Duration sinceLastSync = DateTime.now().difference(_lastSync);
-          if (sinceLastSync.inMinutes > autoSyncIntervalMin) {
-            sync();
-          }
+        _autoTimer =
+            Timer.periodic(Duration(minutes: autoSyncIntervalMin), (timer) {
+          sync();
         });
       } else {
-        // remove listener
-        _timer?.cancel();
+        _autoTimer?.cancel();
       }
     }
   }
 
   /// Most of the time triggered by [localSaveNotifier].
   ///
-  /// - Trigger sign-in if necessary. Handle by [GSignIn]
   /// - Initiate download from remote if [getLocalSaveTime] < google drive save time
   /// - Initiate upload to remote if [getLocalSaveTime] > google drive save time
-  /// - Auto skip(no error) if [enableLocalSaveNotifier] is `false`, except when [forceDownload] or [forceUpload] is `true`
+  /// - Auto skip(no error) if
+  ///   - [enable] is `false`, except when [forceDownload] or [forceUpload] is `true`
+  ///   - [error.value] is `true`, except [ignoreError] set to `true`
   ///
-  /// - [syncing] : will be set to `true` at beginning and to `false` when done.
-  /// - [syncError] : will be set to `true` on error. Reset(to `false`) on successful sync.
+  /// - [syncing.value] : will be set to `true` at beginning and to `false` when done.
+  /// - [error.value] : will be set to `true` on error. Reset(to `false`) on successful sync.
   ///
   /// - [forceDownload] : when set to `true`, will initiate download from remote regardless of save time on both sides
   /// - [forceUpload] : when set to `true`, will initiate upload to remote regardless of save time on both sides
   ///
-  /// Assertion: [forceDownload] or [forceUpload] cannot be `true` in the same call.
+  /// Assertion
+  /// - [forceDownload] and [forceUpload] cannot be `true` at the same call.
+  /// - [token] must be set (not empty).
   Future sync({
     bool forceDownload = false,
     bool forceUpload = false,
     bool ignoreError = false,
   }) async {
     String debugPrefix = '$runtimeType.sync()';
-    assert(!(forceDownload == true && forceUpload == true),
-        '[forceDownload] and [forceUpload] cannot be `true` at the same time.');
-    if (!syncing.value && (!syncError.value || ignoreError)) {
+    if (enable && !syncing.value && (!error.value || ignoreError)) {
       lazy.log(debugPrefix);
-      syncing.value = true;
-      _lastSync = DateTime.now();
       try {
+        assert(!(forceDownload == true && forceUpload == true),
+            '[forceDownload] and [forceUpload] cannot be `true` at the same time.');
+        assert(token.isNotEmpty, '[token] must be set.');
         // Get remote file list
         List<gd.File> gFiles = await remoteFiles();
+
+        syncing.value = true;
+
         int lastSaveMillisecondsGDrive =
             (await remoteLastSaveTime(gFiles)).millisecondsSinceEpoch;
         // Local info
@@ -204,10 +214,11 @@ class GSync {
         }
         // clean up
         await _cleanUpOldFiles(gFiles);
-        syncError.value = false;
+        error.value = false;
         syncing.value = false;
+        _lastSync = DateTime.now();
       } catch (e) {
-        syncError.value = true;
+        error.value = true;
         syncing.value = false;
         lazy.log('$debugPrefix:catch:$e');
       }
@@ -242,7 +253,7 @@ class GSync {
   ///
   /// Download also apply data to [sites]
   Future _download(gd.File gFile) async {
-    assert(setContent != null, '[setContent] function not provided.');
+    assert(setLocalContent != null, '[setContent] function not provided.');
     String debugPrefix = '$runtimeType._download()';
     lazy.log(debugPrefix);
 
@@ -258,7 +269,7 @@ class GSync {
         throw ('File is not Google DriveApi Media.');
       }
       // Apply to sites
-      setContent!(content, gFile.modifiedTime);
+      setLocalContent!(content, gFile.modifiedTime);
     } catch (e) {
       lazy.log('$debugPrefix:catch:$e');
     }
