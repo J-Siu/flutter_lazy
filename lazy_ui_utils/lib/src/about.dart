@@ -10,6 +10,8 @@ class About {
   String? blog;
   String? blogUrl;
   String? copyright;
+  String? help;
+  String? helpUrl;
   String? homepage;
   String? homepageUrl;
   String? license;
@@ -47,6 +49,7 @@ class About {
         ..lazyAdd(lazy.textField(context, text: author))
         ..lazyAdd(lazy.textField(context, text: version))
         ..lazyAdd(lazy.textField(context, text: copyright))
+        ..lazyAdd(lazy.urlButton(context, text: help, url: helpUrl))
         ..lazyAdd(lazy.urlButton(context, text: license, url: licenseUrl))
         ..lazyAdd(lazy.urlButton(context, text: repo, url: repoUrl))
         ..lazyAdd(lazy.urlButton(context,

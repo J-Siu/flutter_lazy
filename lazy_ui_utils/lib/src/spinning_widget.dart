@@ -47,7 +47,7 @@ class _SpinningWidget extends State<SpinningWidget>
     _stop();
     // Check spin value, may started already
     if (widget.spin?.value == true) {
-      _start();
+      _spin();
     }
   }
 
@@ -73,8 +73,8 @@ class _SpinningWidget extends State<SpinningWidget>
     );
   }
 
-  void _start() async {
-    String debugPrefix = '$runtimeType.start()';
+  void _spin() async {
+    String debugPrefix = '$runtimeType._spin()';
     lazy.log(debugPrefix);
     _spinStart = lazy.now;
     try {
@@ -109,7 +109,7 @@ class _SpinningWidget extends State<SpinningWidget>
     String debugPrefix = '$runtimeType._spinHandler()';
     lazy.log(debugPrefix);
     if (widget.spin?.value == true) {
-      _start();
+      _spin();
     } else {
       _stop();
     }

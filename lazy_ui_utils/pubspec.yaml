@@ -1,6 +1,6 @@
 name: lazy_ui_utils
 description: Collection of flutter UI utilities and widgets
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:
