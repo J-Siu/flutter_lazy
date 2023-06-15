@@ -29,22 +29,29 @@ class GetAuthTokenResult {
 }
 
 @JS('chrome.identity.getAuthToken')
-// external jsChromeIdentityGetAuthToken(TokenDetails details, Function callback);
-external jsChromeIdentityGetAuthToken(TokenDetails details);
+external jsGetAuthToken(TokenDetails details);
+
+@JS('chrome.identity.clearAllCachedAuthTokens')
+external jsClearAllCachedAuthTokens();
 
 class ApiChrome {
   List<String>? scopes;
 
   ApiChrome({this.scopes});
 
-  Future<GetAuthTokenResult> identityGetAuthToken(TokenDetails details) async {
+  Future<GetAuthTokenResult> getAuthToken(TokenDetails details) async {
     String debugPrefix = '$runtimeType.identityGetAuthToken()';
     lazy.log(debugPrefix);
 
-    lazy.log("$debugPrefix:jsChromeIdentityGetAuthToken:before");
-    var promise = jsChromeIdentityGetAuthToken(details);
-    lazy.log("$debugPrefix:jsChromeIdentityGetAuthToken:after");
+    var promise = jsGetAuthToken(details);
+    return promiseToFuture(promise);
+  }
 
+  Future clearAllCachedAuthTokens() async {
+    String debugPrefix = '$runtimeType.clearAllCachedAuthTokens()';
+    lazy.log(debugPrefix);
+
+    var promise = jsClearAllCachedAuthTokens();
     return promiseToFuture(promise);
   }
 }
