@@ -1,6 +1,6 @@
 name: lazy_download
-description: Dart package for downloading web content
-version: 0.0.2
+description: merged into lazy_ui_utils
+version: 0.0.3
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:

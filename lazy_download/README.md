@@ -1,1 +1,1 @@
-The [download] function allow saving of [List<int>] data from webapp to local file.
+Merged into lazy_ui_utils
