@@ -5,7 +5,7 @@ extension LazyExtUint8List on Uint8List {
   /// Return [int] value of supplied [bytes]
   ///
   /// - [start] : starting position of [bytes] for conversion, default `0`
-  /// - [end] : ending position of [bytes] for conversion, default [bytes.length]
+  /// - [end] : ending position of [bytes] for conversion, default [bytes].length
   /// - [endian] : Endian of conversion. Default [Endian.big]
   ///
   /// Conversion length:
