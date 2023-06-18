@@ -2,6 +2,8 @@
 /// - [Headers] - collection header generator for various apis
 ///
 /// Part of [lazy] library
+/// Flutter [lazy] library
+/// - https://github.com/J-Siu/flutter_lazy
 library lazy;
 
 export 'src/http_client.dart' show HttpClient;
