@@ -1,13 +1,12 @@
-A simple Google Drive Api wrapper for `googleapis/drive/v3`. Package mainly design for [AppData] scope operation.
+A simple Google Drive Api wrapper for `googleapis/drive/v3`. Package mainly design for [appdata](https://developers.google.com/drive/api/guides/appdata) scope operation.
 
 ## Features
 
 Name|Api Stable|Description
 ---|---|---
-[GDrive]|yes|Simple Google Drive class implementing [create], [get], [list], [searchLatest]
+[GDrive]|yes|Simple Google Drive class implementing wrapper for create, get, list, update, and helper methods download, upload, updateContent, listFiles, getLatest, delCopies.
 [GDriveStringExt]|yes|Provide an easy way to convert `String` to DriveApi media stream.
 [gDriveFileMeta]|yes|A helper function to fill in Drive API `FileMeta`
-
 
 ## Getting started
 

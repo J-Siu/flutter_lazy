@@ -1,4 +1,6 @@
-/// A simple Google Drive Api package mainly design for [AppData] scope operation.
+/// A simple Google Drive Api package mainly design for `AppData` scope operation.
+/// Flutter [lazy] library
+/// - https://github.com/J-Siu/flutter_lazy
 library lazy;
 
 export 'src/defaults.dart';

@@ -1,3 +1,5 @@
+## 2.1.0
+- Add update, download, upload, updateContent, listFiles, getLatest, delCopies
 ## 2.0.0
 - update to googleapis 11.2.0
 - update dependency
