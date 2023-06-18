@@ -1,6 +1,6 @@
 name: lazy_g_sync
-description: Single file sync using Google Drive `appData` space. A bridge between [lazy.GDrive], [lazy.GSignIn] and local data/content.
-version: 2.1.0
+description: Sync single file content in Google Drive `appData` space.
+version: 2.1.1
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:
@@ -10,11 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   googleapis: ^11.2.0
-  lazy_g_drive: ^2.0.0
+  lazy_g_drive: ^2.1.0
   lazy_log: ^2.0.0
-  lazy_extensions: ^2.0.0
-  # lazy_extensions:
-  #   path: ../lazy_extensions
   # lazy_g_drive:
   #   path: ../lazy_g_drive
   # lazy_log:

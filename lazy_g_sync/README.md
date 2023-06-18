@@ -1,4 +1,17 @@
-Single file sync using Google Drive `appData` space. A bridge between [lazy.GDrive](https://pub.dev/packages/lazy_g_drive), [lazy.GSignIn](https://pub.dev/packages/lazy_sign_in) and local data/content.
+GSync is created for syncing app data using Google Drive [appdata](https://developers.google.com/drive/api/guides/appdata) space.
+
+Require Google authorization token with scope 'https://www.googleapis.com/auth/drive.appdata'.
+
+[lazy.GDrive](https://pub.dev/packages/lazy_g_drive) for Google Drive access.
+
+### Feature
+
+Support
+- manual sync
+- auto(periodic) sync
+- trigger sync via ValueNotifier<bool> notification
+- force download
+- force upload
 
 ### Install
 
@@ -6,62 +19,23 @@ Single file sync using Google Drive `appData` space. A bridge between [lazy.GDri
 flutter pub add lazy_g_sync
 ```
 
-### Usage
+### Prerequisite
 
-```dart
-import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:googleapis/drive/v3.dart' as gd;
-import 'package:lazy_collection/lazy_collection.dart' as lazy;
-import 'package:lazy_g_drive/lazy_g_drive.dart' as lazy;
-import 'package:lazy_g_sync/lazy_g_sync.dart' as lazy;
-import 'package:lazy_log/lazy_log.dart' as lazy;
-import 'package:lazy_sign_in_google/lazy_sign_in_google.dart' as lazy;
+To access Google Drive appdata space
+1. Application must have a Google Cloud [Client ID](https://cloud.google.com/endpoints/docs/frameworks/java/creating-client-ids)
+2. Acquire Google authorization token using
+    - [lazy.SignIn](https://pub.dev/packages/lazy_sign_in)
+    - [GoogleSignIn](https://pub.dev/packages/google_sign_in)
+    - other means to support Google Identity authentication and authorization
 
-// Your google sign in should have scope 'https://www.googleapis.com/auth/drive.appdata'
-final globalLazySignIn = lazy.SignInGoogle(
-  clientId: 'Google OAuth Client ID',
-  scopes: [
-    'email',
-    'https://www.googleapis.com/auth/drive.appdata',
-  ],
-);
-final lazyGSync = GSync(lazyGSignIn: globalLazySignIn);
-final someLocalContent = SomeLocalContent();
+### Workflow
 
-void main() {
-  // -- Register [SomeLocalContent] with [lazyGSync]
+The workflow can be break down into setup, enable, sync, and error handling.
 
-  // Tell GSync how to get content
-  lazyGSync.getLocalContent = () => someLocalContent.toString();
-  // Tell GSync how to get filename
-  lazyGSync.getFilename = () => 'localContent.txt';
-  // Tell GSync how to get local last save time
-  lazyGSync.getLocalSaveTime = () => someLocalContent.lastSave;
-  // Tell GSync who will send a save/sync trigger
-  lazyGSync.localSaveNotifier = someLocalContent.saveNotifier;
-  // Tell GSync how to set local content
-  lazyGSync.setContent =
-      (content, dateTime) => someLocalContent.content = content;
-  runApp(const MyApp());
-}
+#### Setup
 
-/// This can be local settings/preferences/content
-class SomeLocalContent {
-  String content = '';
-  DateTime lastSave = DateTime(0);
+#### Enable
 
-  @override
-  String toString() {
-    return content;
-  }
+#### Sync
 
-  ValueNotifier<bool> saveNotifier = ValueNotifier(true);
-
-  /// [save] will also trigger the notifier
-  save(String v) {
-    content = v;
-    saveNotifier.value = !saveNotifier.value;
-  }
-}
-```
+#### Error Handling

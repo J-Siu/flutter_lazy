@@ -12,28 +12,28 @@ final globalLazySignIn = lazy.SignInGoogle(
     'https://www.googleapis.com/auth/drive.appdata',
   ],
 );
-final lazyGSync = lazy.GSync(lazyGSignIn: globalLazySignIn);
-final someLocalContent = SomeLocalContent();
+final lazyGSync = lazy.GSync();
+final dummyContent = DummyContent();
 
 void main() {
   // -- Register [SomeLocalContent] with [lazyGSync]
 
   // Tell GSync how to get content
-  lazyGSync.getLocalContent = () => someLocalContent.toString();
+  lazyGSync.getLocalContent = () => dummyContent.toString();
   // Tell GSync how to get filename
   lazyGSync.getFilename = () => 'localContent.txt';
   // Tell GSync how to get local last save time
-  lazyGSync.getLocalSaveTime = () => someLocalContent.lastSave;
+  lazyGSync.getLocalSaveTime = () => dummyContent.lastSave;
   // Tell GSync who will send a save/sync trigger
-  lazyGSync.localSaveNotifier = someLocalContent.saveNotifier;
+  lazyGSync.localSaveNotifier = dummyContent.saveNotifier;
   // Tell GSync how to set local content
-  lazyGSync.setContent =
-      (content, dateTime) => someLocalContent.content = content;
+  lazyGSync.setLocalContent =
+      (content, dateTime) => dummyContent.content = content;
   runApp(const MyApp());
 }
 
 /// This can be local settings/preferences/content
-class SomeLocalContent {
+class DummyContent {
   String content = '';
   DateTime lastSave = DateTime(0);
 
