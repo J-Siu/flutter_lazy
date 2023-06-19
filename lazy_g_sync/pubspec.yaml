@@ -1,5 +1,5 @@
 name: lazy_g_sync
-description: Sync single file content in Google Drive `appData` space.
+description: Sync single file content with Google Drive, mainly for `appData` space operation.
 version: 2.1.1
 homepage: https://github.com/j-siu/flutter_lazy
 
