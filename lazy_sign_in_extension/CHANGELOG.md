@@ -1,3 +1,5 @@
+## 2.1.1
+- Update doc
 ## 2.1.0
 - Update to [lazy_sign_in] 2.1.0
 ## 2.0.0

@@ -5,7 +5,7 @@ import 'package:lazy_log/lazy_log.dart' as lazy;
 import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
 
 /// ### Lazy [SignInExtChrome]
-/// - Build in listener for account status change, and a [SignInMsg] notifier [msg]
+/// Google Identity authorization wrapped in [lazy_sign_in](https://pub.dev/packages/lazy_sign_in) interface.
 class SignInExtChrome extends lazy.SignIn {
   // --- Internal
   String _displayName = '';
