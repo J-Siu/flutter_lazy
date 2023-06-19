@@ -1,4 +1,4 @@
-import 'flutter.dart' as lazy;
+import '../lazy_ui_utils.dart' as lazy;
 import 'package:flutter/material.dart';
 import 'package:lazy_extensions/lazy_extensions.dart' as lazy;
 
@@ -24,10 +24,10 @@ class About {
   String? version;
   Widget? logo;
 
-  /// Used as [children] in [popup]
+  /// Used as `children` in [popup]
   List<Widget> content = [];
 
-  /// Use as [title] in [popup]
+  /// Use as `title` in [popup]
   /// - extend this class and `override` to change order/behavior
   Widget? widgetTitle() {
     if (title != null) {
@@ -49,13 +49,13 @@ class About {
         ..lazyAdd(lazy.textField(context, text: author))
         ..lazyAdd(lazy.textField(context, text: version))
         ..lazyAdd(lazy.textField(context, text: copyright))
-        ..lazyAdd(lazy.urlButton(context, text: help, url: helpUrl))
-        ..lazyAdd(lazy.urlButton(context, text: license, url: licenseUrl))
-        ..lazyAdd(lazy.urlButton(context, text: repo, url: repoUrl))
-        ..lazyAdd(lazy.urlButton(context,
+        ..lazyAdd(lazy.buttonUrl(context, text: help, url: helpUrl))
+        ..lazyAdd(lazy.buttonUrl(context, text: license, url: licenseUrl))
+        ..lazyAdd(lazy.buttonUrl(context, text: repo, url: repoUrl))
+        ..lazyAdd(lazy.buttonUrl(context,
             text: 'Privacy Policy', url: privacyPolicyUrl))
-        ..lazyAdd(lazy.urlButton(context, text: homepage, url: homepageUrl))
-        ..lazyAdd(lazy.urlButton(context, text: blog, url: blogUrl));
+        ..lazyAdd(lazy.buttonUrl(context, text: homepage, url: homepageUrl))
+        ..lazyAdd(lazy.buttonUrl(context, text: blog, url: blogUrl));
     }
   }
 

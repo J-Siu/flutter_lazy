@@ -1,16 +1,16 @@
-import 'package:lazy_extensions/lazy_extensions.dart' as lazy;
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:lazy_extensions/lazy_extensions.dart' as lazy;
 import 'package:lazy_log/lazy_log.dart' as lazy;
 
-/// ### Lazy [SpinningWidget]
+/// ### Lazy [SpinWidget]
 ///
 /// - Self contain spinning widget. No need to setup your own animation controller, just pass in [child] and a [ValueNotifier] for start/stop
 /// - Specify minimum spin time before stop
-class SpinningWidget extends StatefulWidget {
+class SpinWidget extends StatefulWidget {
   /// Start/Stop the spinning
-  /// - set [spin.value] = `true` to start spinning
-  /// - set [spin.value] = `false` to stop spinning
+  /// - set [spin].value = `true` to start spinning
+  /// - set [spin].value = `false` to stop spinning
   final ValueNotifier<bool>? spin;
 
   /// The spinning child widget
@@ -20,7 +20,7 @@ class SpinningWidget extends StatefulWidget {
   /// - Default 0sec
   final int minSyncSpinningSeconds;
 
-  const SpinningWidget({
+  const SpinWidget({
     Key? key,
     required this.child,
     this.minSyncSpinningSeconds = 0,
@@ -28,11 +28,10 @@ class SpinningWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _SpinningWidget();
+  State<StatefulWidget> createState() => _SpinWidget();
 }
 
-class _SpinningWidget extends State<SpinningWidget>
-    with TickerProviderStateMixin {
+class _SpinWidget extends State<SpinWidget> with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 30),
     vsync: this,
@@ -44,11 +43,6 @@ class _SpinningWidget extends State<SpinningWidget>
   void initState() {
     super.initState();
     widget.spin?.addListener(_spinHandler);
-    _stop();
-    // Check spin value, may started already
-    if (widget.spin?.value == true) {
-      _spin();
-    }
   }
 
   @override
@@ -102,7 +96,6 @@ class _SpinningWidget extends State<SpinningWidget>
       // Do nothing. _controller disposed already.
       lazy.log('$debugPrefix:catch:$e -> Do nothing. _controller disposed.');
     }
-    lazy.log('$debugPrefix:spinning stopped');
   }
 
   void _spinHandler() async {

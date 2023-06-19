@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lazy_extensions/lazy_extensions.dart' as lazy;
 
 // Material/Flutter
 const double defaultPadding = 4;
@@ -100,32 +99,4 @@ Widget outlinedTextButton({
       child: child,
     ),
   );
-}
-
-Widget? textField(BuildContext context, {String? text}) {
-  if (text != null) {
-    return textPadding(
-      text,
-      style: textStyleBodyS(context),
-      textAlign: TextAlign.center,
-    );
-  }
-  return null;
-}
-
-Widget? urlButton(BuildContext context, {String? text, String? url}) {
-  if (text == null && url == null) return null;
-  if (url == null) {
-    return textField(context, text: text!);
-  } else {
-    String label = text ?? url;
-    return OutlinedButton(
-      onPressed: () => lazy.openUrl(url),
-      style: buttonStyleRound(),
-      child: Text(
-        label,
-        style: textStyleBodyS(context),
-      ),
-    );
-  }
 }

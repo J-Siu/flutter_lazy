@@ -1,6 +1,5 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
-
-import 'flutter.dart' as lazy;
+import '../lazy_ui_utils.dart' as lazy;
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
