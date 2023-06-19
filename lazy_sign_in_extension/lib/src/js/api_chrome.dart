@@ -2,8 +2,8 @@
 library ext_api_chrome;
 
 import 'dart:async';
-import 'dart:js_util';
 import 'package:js/js.dart';
+import 'package:js/js_util.dart';
 import 'package:lazy_log/lazy_log.dart' as lazy;
 
 @JS()

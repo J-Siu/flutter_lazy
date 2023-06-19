@@ -1,6 +1,6 @@
 name: lazy_sign_in_extension
-description: Chrome/Firefox extension Google sign-in library base on [LazySignIn]
-version: 2.1.1
+description: Chrome/Firefox extension Google sign-in library base on `LazySignIn``
+version: 2.1.2
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:

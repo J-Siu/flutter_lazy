@@ -1,3 +1,5 @@
+## 2.1.2
+- Fix api_chrome.dart import issue
 ## 2.1.1
 - Update doc
 ## 2.1.0
