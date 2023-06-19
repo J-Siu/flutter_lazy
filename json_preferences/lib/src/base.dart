@@ -4,7 +4,7 @@ import 'package:lazy_log/lazy_log.dart' as lazy;
 import 'package:lazy_extensions/lazy_extensions.dart' as lazy;
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// [JsonPreference] - Json object with [SharedPreferences]
+/// Json object with `[SharedPreferences]
 class JsonPreference {
   /// [key] for saving preference
   /// - You must set the [key] or it will throw. This is a safety check to prevent different instances overwriting each other save.
@@ -39,7 +39,7 @@ class JsonPreference {
   /// Generate filename from [key]
   /// - If [filenamePrefix] is not empty, filename = [filenamePrefix].[key].json, else [key].json
   ///
-  /// [JsonPreferences] don't use this internally. This is provided as an utility for external use.
+  /// This is an utility function for external use.
   get keyFilename {
     if (filenamePrefix.isEmpty) {
       return '$key.json';

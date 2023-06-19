@@ -3,8 +3,9 @@ Json object with `shared_preferences`.
 ## Features
 
 Provide two flavors:
-- [JsonPreferences] - Json object with [SharedPreferences]
-- [JsonPreferencesNotify] - Provide [ChangeNotifier] for data update and a [saveNotifier] triggered by [save]
+
+- `JsonPreferences` - Json object with `SharedPreferences`
+- `JsonPreferencesNotify` - Provide `ChangeNotifier `for data update and a `saveNotifier` triggered by `save`
 
 ## Getting started
 
@@ -17,8 +18,6 @@ flutter pub add json_preferences
 ```dart
 import 'package:json_preferences/json_preferences.dart'
 ```
-
-[Example coming soon]
 
 ## Additional information
 

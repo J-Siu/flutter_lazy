@@ -1,9 +1,9 @@
+import 'base.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:lazy_log/lazy_log.dart' as lazy;
-import 'base.dart';
 
-/// [JsonPreferences] with notification
+/// `JsonPreferences` with notification
 /// - Provide [ChangeNotifier] for data update and a [saveNotifier] triggered by [save]
 class JsonPreferenceNotify extends JsonPreference with ChangeNotifier {
   // Constructor

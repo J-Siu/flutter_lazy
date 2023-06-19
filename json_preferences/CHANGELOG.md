@@ -1,3 +1,5 @@
+## 2.0.1
+- update dependency
 ## 2.0.0
 - update dependency
 - use Object.jsonPretty()

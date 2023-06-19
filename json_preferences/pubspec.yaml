@@ -1,6 +1,6 @@
 name: json_preferences
 description: Combine json object with [SharedPreferences]. And an extended version with notifier.
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:
@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   lazy_log: ^2.0.0
-  lazy_extensions: ^2.0.0
+  lazy_extensions: ^2.1.0
   # lazy_extensions:
   #   path: ../lazy_extensions
   # lazy_log:
