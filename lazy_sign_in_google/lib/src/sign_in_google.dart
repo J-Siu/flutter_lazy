@@ -1,14 +1,12 @@
-import 'dart:js_interop';
-
 import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
-import 'package:google_sign_in/google_sign_in.dart' as lazy;
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lazy_log/lazy_log.dart' as lazy;
 
 /// ### Lazy [SignInGoogle]
-/// - Build in listener for account status change, and a [SignInMsg] notifier [msg]
-/// - [GoogleSignIn] wrapper class with a [signInHandler]
+/// - Build in listener for account status change.
+/// - A [GoogleSignIn] wrapper class.
 class SignInGoogle extends lazy.SignIn {
-  final lazy.GoogleSignIn _api;
+  final GoogleSignIn _api;
 
   /// - [clientId]
   ///   - use Google OAuth Chrome Application Client Id standalone app
@@ -18,29 +16,21 @@ class SignInGoogle extends lazy.SignIn {
   ///   - Default  `['email']` for Google api
   /// - [debugLog] : force print of log message. Default `false`
   SignInGoogle({
-    debugLog = false,
     required clientId,
     scopes = const ['email'],
-  })  : _api = lazy.GoogleSignIn(clientId: clientId, scopes: scopes),
+    debugLog = false,
+  })  : _api = GoogleSignIn(clientId: clientId, scopes: scopes),
         super(
           clientId: clientId,
           debugLog: debugLog,
           scopes: scopes,
         ) {
-    // #region GSignIn
     String debugPrefix = '$runtimeType.SignInGoogle()';
     assert(clientId.isNotEmpty, '$debugPrefix:clientId cannot be empty');
-    _api.onCurrentUserChanged.listen((_) {
-      isSignedIn.value = !_api.currentUser.isNull;
-      if (_api.currentUser.isNull) {
-        isSignedIn.value = false;
-        token.value = '';
-      } else {
-        isSignedIn.value = true;
-      }
+    _api.onCurrentUserChanged.listen((account) {
+      _apiOnUserChange(account);
     });
     lazy.log('$debugPrefix:GoogleSignIn().listen():done', forced: debugLog);
-    // #endregion
   }
 
   // --- Output
@@ -103,5 +93,15 @@ class SignInGoogle extends lazy.SignIn {
         (await _api.currentUser?.authHeaders)?['Authorization'] ?? '';
     token.value = tokenTmp.replaceAll('Bearer ', '');
     return authorized;
+  }
+
+  void _apiOnUserChange(GoogleSignInAccount? account) {
+    if (_api.currentUser == null) {
+      isSignedIn.value = false;
+    } else {
+      isSignedIn.value = true;
+    }
+    // If user change, reauthorize anyway
+    token.value = '';
   }
 }
