@@ -1,3 +1,6 @@
+## 2.1.2
+- update to googleapis 11.3.0
+- update dependency
 ## 2.1.1
 - update lazy_g_drive to 2.1.0
 ## 2.1.0
