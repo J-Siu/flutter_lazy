@@ -1,6 +1,6 @@
 name: lazy_ui_utils
 description: A collection of flutter UI utilities, widgets, helper functions and handy defaults.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:
@@ -13,7 +13,7 @@ dependencies:
   flutter_switch: ^0.3.2
   theme_provider: ^0.6.0
   lazy_extensions: ^2.1.0
-  lazy_log: ^2.0.0
+  lazy_log: ^2.0.1
   universal_html: ^2.2.3
   url_launcher: ^6.1.11
   # lazy_extensions:
