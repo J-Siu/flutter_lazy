@@ -1,7 +1,7 @@
 name: lazy_log
 description: Simple [log] with global [enableLog] to turn on and off and [forced] to override individually.
 
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/j-siu/flutter_lazy
 
 environment:

@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Add timestamp support
+
 ## 2.0.0
 
 - Moved jsonPretty to lazy_extensions
