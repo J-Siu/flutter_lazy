@@ -1,3 +1,5 @@
+## 2.1.2
+- update dependency
 ## 2.1.1
 - Fix logic `for _apiOnUserChange`
 ## 2.1.0

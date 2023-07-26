@@ -1,6 +1,6 @@
-import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lazy_log/lazy_log.dart' as lazy;
+import 'package:lazy_sign_in/lazy_sign_in.dart' as lazy;
 
 /// ### Lazy [SignInGoogle]
 /// - Build in listener for account status change.
