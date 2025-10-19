@@ -1,3 +1,5 @@
+## 2.1.2
+- update dependency
 ## 2.1.1
 - update to googleapis 11.3.0
 - update dependency
